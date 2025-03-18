@@ -1,12 +1,14 @@
  export class Start extends Phaser.Scene {
     constructor() {
         super('Start');
-        this.tabContainers = {}; // Object to hold tab containers
+        this.tabContainers = {};
+        this.numLoaded = {};
     }
 
     preload() {
         this.load.image('bg', './assets/bg.jpg');
         this.load.image('clover', './assets/clover.png');
+        this.load.image('code', './assets/code.jpg');
     }
 
     create() {
@@ -91,8 +93,17 @@
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Resume Content Here', {
                 fontSize: '30px',
                 color: textColor
-            }).setOrigin(0.5)
+            }).setOrigin(0.5),
         );
+        let loadGameButton = this.add.text(80, this.scale.height / 2 * 0.25, 'Load Space Shooter Game', {
+            fontSize: '24px',
+            color: '#15ff00ea',
+            backgroundColor: '#247732',
+            padding: { x: 10, y: 5 }
+        })
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Astral-Shooter/', 1));
+        resumeContainer.add(loadGameButton);
         this.tabContainers['Resume'] = resumeContainer;
 
         // Photos Tab Container
@@ -142,8 +153,56 @@
         }
     }
 
-    // To avoid syntax errors when using hex codes when required as a number, not string
+    // To avoid syntax errors when using hex codes when required as a number instead of string
     hexStringToNumber(hex) {
         return parseInt(hex.replace('#', '0x'));
+    }
+
+    loadMiniGame(url, num) {
+        if (!this.numLoaded[num]) {
+            this.numLoaded[num] = true;
+            console.log('Embedding new game...');
+
+            const iframe = document.createElement('iframe');
+            iframe.src = url;
+            iframe.style.width = '1000px';
+            iframe.style.height = '600px';
+            iframe.style.border = '2px solid #FFFFFF';
+
+            if (!this.embeddedContainers) this.embeddedContainers = {};
+            if (!this.embeddedContainers[num]) {
+                const embeddedContainer = document.createElement('div');
+                embeddedContainer.id = `embeddedGameContainer${num}`;
+                embeddedContainer.style.position = 'absolute';
+                embeddedContainer.style.top = '50%';
+                embeddedContainer.style.left = '50%';
+                embeddedContainer.style.transform = 'translate(-50%, -50%)';
+                document.body.appendChild(embeddedContainer);
+                this.embeddedContainers[num] = embeddedContainer;
+            }
+
+            this.embeddedContainers[num].appendChild(iframe);
+        }
+
+        if (!this.overlays) this.overlays = {};
+        if (!this.overlays[num]) {
+            let rect = this.add.image(
+                this.scale.width / 2, this.scale.height / 2, 'code'
+            );
+            rect.setInteractive({ useHandCursor: true });
+            rect.setOrigin(0.5, 0.5);
+            rect.setDisplaySize(this.scale.width, this.scale.height);
+
+            this.overlays[num] = rect;
+            this.embeddedContainers[num].classList.remove('hide');
+
+            rect.on('pointerdown', () => {
+                this.embeddedContainers[num].classList.toggle('hide');
+                rect.setVisible(!rect.visible);
+            });
+        } else {
+            this.embeddedContainers[num].classList.toggle('hide');
+            this.overlays[num].setVisible(!this.overlays[num].visible);
+        }
     }
 }
