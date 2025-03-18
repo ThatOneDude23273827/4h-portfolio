@@ -1,4 +1,4 @@
-export class Start extends Phaser.Scene {
+ export class Start extends Phaser.Scene {
     constructor() {
         super('Start');
         this.tabContainers = {}; // Object to hold tab containers
