@@ -23,5 +23,8 @@ const OnChangeScreen = () => {
 OnChangeScreen();
 
 let _orientation = screen.orientation || screen.mozOrientation || screen.msOrientation;
-_orientation.addEventListener('change', OnChangeScreen);
+_orientation.addEventListener('change', () => {
+    window.location.reload();
+    OnChangeScreen();
+});
 window.addEventListener('resize', OnChangeScreen);
