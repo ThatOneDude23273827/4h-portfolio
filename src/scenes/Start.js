@@ -32,7 +32,7 @@ export class Start extends Phaser.Scene {
             const fontSize = baseFontSize * (this.scale.width / 800);
             const button = this.add.text(xOffset, 10, name, {
                 fontSize: `${fontSize}px`,
-                color: '#1cac4c',
+                color: '#15ff00ea',
                 backgroundColor: '#000000',
                 padding: { x: 10, y: 5 },
                 align: 'center'
@@ -42,11 +42,11 @@ export class Start extends Phaser.Scene {
                 .setInteractive({ useHandCursor: true })
                 .on('pointerdown', () => this.handleTabClick(name))
                 .on('pointerover', () => button.setColor('#FFFFFF'))
-                .on('pointerout', () => button.setColor('#1cac4c'));
+                .on('pointerout', () => button.setColor('#15ff00ea'));
             xOffset += button.width + 20;
         });
 
-        this.initializeTabContent();
+        this.initializeTabContent('#15ff00ea');
 
         // Separation Bar
         this.add.rectangle(this.scale.width / 2, 70, this.scale.width * 0.9, 2, this.hexStringToNumber('#FFFFFF')).setOrigin(0.5, 0);
@@ -63,13 +63,13 @@ export class Start extends Phaser.Scene {
         //    .setOrigin(0.5, 0.5);
     }
 
-    initializeTabContent() {
+    initializeTabContent(textColor) {
         // Home Tab Container
         let homeContainer = this.add.container(0, 0);
         homeContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Home', {
                 fontSize: '40px',
-                color: '#1cac4c'
+                color: textColor
             }).setOrigin(0.5)
         );
         homeContainer.add(
@@ -77,7 +77,7 @@ export class Start extends Phaser.Scene {
             this.add.text(Math.floor(this.scale.width / 2), Math.floor(this.scale.height / 2 - 200), 
             "I'm Caleb, and I enjoy programming as both a hobby and semi-paying job.\nYou may see for example, the 4-H Clover in the corner following your mouse.", {
                 fontSize: '20px',
-                color: '#1cac4c'
+                color: textColor
             })
             .setOrigin(0.5)
         );
@@ -88,13 +88,13 @@ export class Start extends Phaser.Scene {
         resumeContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Resume', {
                 fontSize: '40px',
-                color: '#1cac4c'
+                color: textColor
             }).setOrigin(0.5)
         );
         resumeContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Resume Content Here', {
                 fontSize: '30px',
-                color: '#1cac4c'
+                color: textColor
             }).setOrigin(0.5)
         );
         this.tabContainers['Resume'] = resumeContainer;
@@ -104,13 +104,13 @@ export class Start extends Phaser.Scene {
         photosContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Photos', {
                 fontSize: '40px',
-                color: '#1cac4c'
+                color: textColor
             }).setOrigin(0.5)
         );
         photosContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Photos Content Here', {
                 fontSize: '30px',
-                color: '#1cac4c'
+                color: textColor
             }).setOrigin(0.5)
         );
         this.tabContainers['Photos'] = photosContainer;
@@ -120,13 +120,13 @@ export class Start extends Phaser.Scene {
         showcaseContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Showcase', {
                 fontSize: '40px',
-                color: '#1cac4c'
+                color: textColor
             }).setOrigin(0.5)
         );
         showcaseContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Showcase Content Here', {
                 fontSize: '30px',
-                color: '#1cac4c'
+                color: textColor
             }).setOrigin(0.5)
         );
         this.tabContainers['Showcase'] = showcaseContainer;
