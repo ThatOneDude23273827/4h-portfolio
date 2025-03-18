@@ -1,19 +1,33 @@
-import { Start } from './scenes/Start.js';
+import { config } from './config.js';
 
-const config = {
-    type: Phaser.AUTO,
-    title: '4H Portfolio',
-    parent: 'game-container',
-    width: 1280,
-    height: 720,
-    pixelArt: false,
-    backgroundColor: '#FFFFFF',
-    scene: [
-        Start
-    ],
-    scale: {
-        mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
-        autoCenter: Phaser.Scale.CENTER_BOTH
-    },
+const game = new Phaser.Game(config);
+const OnChangeScreen = () => {
+    let isLandscape = screen.orientation.type.includes('landscape');
+    let rotateAlert = document.getElementById('rotateAlert');
+    if (isLandscape) {
+        game.isPaused = false;
+        if (rotateAlert.classList.contains('flex')) {
+            rotateAlert.classList.replace('flex', 'hidden');
+        }
+        else {
+            rotateAlert.classList.add('hidden');
+        }
+    } else {
+        game.isPaused = true;
+        if (rotateAlert.classList.contains('hidden')) {
+            rotateAlert.classList.replace('hidden', 'flex');
+        }
+        else {
+            rotateAlert.classList.add('flex');
+        }
+    }
 }
-new Phaser.Game(config);
+OnChangeScreen();
+
+let _orientation = screen.orientation || screen.mozOrientation || screen.msOrientation;
+_orientation.addEventListener('change', function (e) {
+    OnChangeScreen();
+});
+window.addEventListener('resize', function (e) {
+    OnChangeScreen();
+});

@@ -1,9 +1,6 @@
 export class Start extends Phaser.Scene {
     constructor() {
         super('Start');
-        this.bgVisible = true;
-        this.menuOpen = false;
-        this.menuIconMoving = false;
         this.tabContainers = {}; // Object to hold tab containers
     }
 
@@ -17,7 +14,6 @@ export class Start extends Phaser.Scene {
         this.bg = this.add.image(this.scale.width / 2, this.scale.height / 2, 'bg')
             .setOrigin(0.5, 0.5)
             .setDisplaySize(this.scale.width, this.scale.height);
-        //this.toggleCodeBG();
 
         // Background image cover
         this.colorBlock = this.add.rectangle(this.scale.width / 2, this.scale.height / 2, this.scale.width * 0.93, 800, this.hexStringToNumber('#000000'))
@@ -144,29 +140,6 @@ export class Start extends Phaser.Scene {
         if (this.tabContainers[tabName]) {
             this.tabContainers[tabName].setVisible(true);
         }
-    }
-
-    openMenu() {
-        console.log('Menu icon clicked');
-        if (this.menuOpen) {
-            if (this.menuIconMoving) {
-                this.menuButton.play('menuClick');
-            } else {
-                this.menuButton.play('menuClick-');
-            }
-        } else {
-            if (this.menuIconMoving) {
-                this.menuButton.play('menuClick-');
-            } else {
-                this.menuButton.play('menuClick');
-            }
-        }
-        this.menuOpen = !this.menuOpen;
-    }
-
-    toggleCodeBG() {
-        this.bgVisible = !this.bgVisible;
-        this.bg.setVisible(this.bgVisible);
     }
 
     // To avoid syntax errors when using hex codes when required as a number, not string
