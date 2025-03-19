@@ -147,10 +147,9 @@
         Object.values(this.tabContainers).forEach(container => {
             container.setVisible(false);
         });
-        // Show the selected container
         if (this.tabContainers[tabName]) {
             this.tabContainers[tabName].setVisible(true);
-        }
+        };
     }
 
     // To avoid syntax errors when using hex codes when required as a number instead of string
@@ -182,7 +181,7 @@
             }
 
             this.embeddedContainers[num].appendChild(iframe);
-        }
+        };
 
         if (!this.overlays) this.overlays = {};
         if (!this.overlays[num]) {
@@ -203,6 +202,6 @@
         } else {
             this.embeddedContainers[num].classList.toggle('hide');
             this.overlays[num].setVisible(!this.overlays[num].visible);
-        }
+        };
     }
 }
