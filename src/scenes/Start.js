@@ -95,7 +95,8 @@
                 color: textColor
             }).setOrigin(0.5),
         );
-        let loadGameButton = this.add.text(80, this.scale.height / 2 * 0.25, 'Load Space Shooter Game', {
+        let buttonText = 'Space Shooter Game'
+        const loadGameButton = this.add.text(80, this.scale.height / 2 * 0.25, 'Load ' + buttonText, {
             fontSize: '24px',
             color: '#15ff00ea',
             backgroundColor: '#247732',
