@@ -172,6 +172,7 @@
             if (!this.embeddedContainers) this.embeddedContainers = {};
             if (!this.embeddedContainers[num]) {
                 const embeddedContainer = document.createElement('div');
+                document.body.style.display = 'flex';
                 embeddedContainer.id = `embeddedGameContainer${num}`;
                 embeddedContainer.style.position = 'absolute';
                 embeddedContainer.style.top = '50%';
