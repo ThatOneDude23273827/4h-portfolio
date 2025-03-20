@@ -1,5 +1,27 @@
 import * as pdfjsLib from '../pdfJs/build/pdf.mjs';
-pdfjsLib.GlobalWorkerOptions.workerSrc = '../4h-portfolio/src/pdfJs/build/pdf.worker.mjs';
+
+async function testResponse() {
+    fetch('./src/pdfJs/build/pdf.worker.mjs')
+    .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.ok;
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+})};
+
+async function setWorkerSrc() {
+  const isWorkerAvailable = await testResponse();
+  if (!isWorkerAvailable) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = './src/pdfJs/build/pdf.worker.mjs';
+  } else {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '../4h-portfolio/src/pdfJs/build/pdf.worker.mjs';
+  }
+}
+
+setWorkerSrc();
 
 export class Start extends Phaser.Scene {
     constructor() {
@@ -396,5 +418,40 @@ export class Start extends Phaser.Scene {
         } else {
             this.loadPdf(section, xIfLoaded);
         };
+    };
+
+    getMimeType(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = function(e) {
+            const arr = (new Uint8Array(e.target.result)).subarray(0, 4);
+            let header = '';
+            for (let i = 0; i < arr.length; i++) {
+                header += arr[i].toString(16);
+            }
+            let type = '';
+            switch (header) {
+                case '89504e47':
+                type = 'image/png';
+                break;
+                case '47494638':
+                type = 'image/gif';
+                break;
+                case 'ffd8ffe0':
+                case 'ffd8ffe1':
+                case 'ffd8ffe2':
+                type = 'image/jpeg';
+                break;
+                default:
+                type = 'unknown';
+                break;
+            }
+            resolve(type);
+            };
+            reader.onerror = function() {
+            reject(new Error('File reading error'));
+            };
+            reader.readAsArrayBuffer(file);
+        });
     };
 };
