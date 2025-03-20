@@ -1,5 +1,5 @@
 import * as pdfjsLib from '../pdfJs/build/pdf.mjs';
-pdfjsLib.GlobalWorkerOptions.workerSrc = '../src/pdfJs/build/pdf.worker.mjs';
+pdfjsLib.GlobalWorkerOptions.workerSrc = '../4h-portfolio/src/pdfJs/build/pdf.worker.mjs';
 
 export class Start extends Phaser.Scene {
     constructor() {
