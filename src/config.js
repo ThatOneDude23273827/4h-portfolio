@@ -15,4 +15,7 @@ export const config = {
         mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
+    dom: {
+        createContainer: true
+    },
 }
