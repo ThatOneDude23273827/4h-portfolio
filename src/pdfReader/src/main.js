@@ -1,11 +1,11 @@
 // Copyright 2025 ThatOneGuy2664 //
 
 const params = new URLSearchParams(window.location.search);
-const url = params.get("file") || 'https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/assets/section-a-2024.pdf';
+const url = params.get("file") || 'https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/section-a-2024.pdf';
 const viewerContainer = document.getElementById('viewerContainer');
 const scale = 1.5;
 
-pdfjsLib.getDocument(url).promise.then(pdf => {
+pdfjsLib.getDocument(''+ url).promise.then(pdf => {
   for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
     pdf.getPage(pageNumber).then(page => {
       const viewport = page.getViewport({ scale: scale });

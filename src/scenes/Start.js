@@ -1,28 +1,3 @@
-import * as pdfjsLib from '../pdfJs/build/pdf.mjs';
-
-async function testResponse() {
-    fetch('./src/pdfJs/build/pdf.worker.mjs')
-    .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.ok;
-    })
-    .catch(error => {
-        console.error('Fetch error:', error);
-})};
-
-async function setWorkerSrc() {
-  const isWorkerAvailable = await testResponse();
-  if (!isWorkerAvailable) {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = './src/pdfJs/build/pdf.worker.mjs';
-  } else {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = '../4h-portfolio/src/pdfJs/build/pdf.worker.mjs';
-  }
-}
-
-setWorkerSrc();
-
 export class Start extends Phaser.Scene {
     constructor() {
         super('Start');
@@ -337,7 +312,29 @@ export class Start extends Phaser.Scene {
             return
         };
 
-        window.location.href = `../src/pdfReader/src/index.html?file=${encodeURIComponent(pdfUrl)}`;
+        async function fetchData() {
+            try {
+                const response = await fetch(pdfUrl);
+
+                if (!response.ok) {
+                console.error(`HTTP error! Status: ${response.status}`);
+                return false;
+                }
+
+                const data = await response.json();
+                console.log('Data fetched successfully:', data);
+                return true;
+            } catch (error) {
+                console.error('Fetch error:', error);
+                return false;
+            }
+        };
+
+        if (fetchData()) {
+            window.location.href = `../pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
+        } else {
+            window.location.href = `4h-portfolio/src/pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
+        };
     };
 
     handlePdfChoice(action) {
