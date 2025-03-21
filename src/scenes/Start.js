@@ -312,24 +312,6 @@ export class Start extends Phaser.Scene {
             return
         };
 
-        async function fetchData() {
-            try {
-                const response = await fetch(pdfUrl);
-
-                if (!response.ok) {
-                    console.error(`HTTP error! Status: ${response.status}`);
-                    return false;
-                }
-
-                const data = await response.json();
-                console.log('Data fetched successfully:', data);
-                return true;
-            } catch (error) {
-                console.error('Fetch error:', error);
-                return false;
-            }
-        };
-
         window.location.href = `/4h-portfolio/src/pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
     };
 
@@ -348,7 +330,7 @@ export class Start extends Phaser.Scene {
 
         if (action === 1) {
             const link = document.createElement('a');
-            link.href = `/4h-porfolio/src/pdfReader/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
+            link.href = `https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
             link.download = `section-${sectionStr}-${this.yearSelected}.pdf`
             link.click();
         } else {
