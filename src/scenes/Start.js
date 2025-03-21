@@ -330,8 +330,8 @@ export class Start extends Phaser.Scene {
             }
         };
 
-        if (!fetchData()) {
-            window.location.href = `../pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
+        if (fetchData()) {
+            window.location.href = `../../pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
         } else {
             window.location.href = `4h-portfolio/src/pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
         };
