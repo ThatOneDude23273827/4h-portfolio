@@ -329,8 +329,7 @@ export class Start extends Phaser.Scene {
         };
 
         if (action === 1) {
-            const link = document.createElement('a');
-            const fileUrl = `https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/section-${sectionStr}-${yearSelected}.pdf`;
+            const fileUrl = `https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
             fetch(fileUrl)
             .then(response => {
                 if (!response.ok) {
