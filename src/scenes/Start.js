@@ -342,7 +342,7 @@ export class Start extends Phaser.Scene {
                 const link = document.createElement('a');
                 const url = URL.createObjectURL(blob);
                 link.href = url;
-                link.download = `section-${sectionStr}-${yearSelected}.pdf`;
+                link.download = `section-${sectionStr}-${this.yearSelected}.pdf`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
