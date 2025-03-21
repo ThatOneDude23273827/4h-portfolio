@@ -348,8 +348,8 @@ export class Start extends Phaser.Scene {
 
         if (action === 1) {
             const link = document.createElement('a');
-            link.href = `/`;
-            link.download = `4h-porfolio/src/pdfReader/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`.split('/').pop();
+            link.href = `/4h-porfolio/src/pdfReader/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
+            link.download = `section-${sectionStr}-${this.yearSelected}.pdf`
             link.click();
         } else {
             this.loadPdf();
