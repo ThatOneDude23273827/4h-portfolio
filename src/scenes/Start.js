@@ -30,6 +30,7 @@ export class Start extends Phaser.Scene {
         this.numLoaded = {};
         this.overlays = [];
         this.yearSelected = null;
+        this.formSelected = null;
     };
 
     preload() {
@@ -102,87 +103,90 @@ export class Start extends Phaser.Scene {
                 color: textColor
             }).setOrigin(0.5)
         );
-        homeContainer.add(
-            // Math.floor() makes the text less blurry (I think?)
-            this.add.text(Math.floor(this.scale.width / 2), Math.floor(this.scale.height / 2 - 200), 
-            "\n\n\n\n\n\n             I'm Caleb, and I enjoy programming as both a hobby and semi-paying job.\nAs a matter a fact, this website has been entirely programmed by me, and you can view its source\n                                   code under the Showcase Tab.\n\n\nBefore you look at my different 305 Forms, note that due to DOM restrictions with JavaScript,\nwhen using the site's built-in PDF Viewer, you must scroll up or down on the document outside\nthe PDF Page. Or simply download the PDF after selecting the year and form.", {
-                fontSize: '20px',
-                color: textColor
-            })
-            .setOrigin(0.5)
-        );
         this.graphics.fillStyle(this.hexStringToNumber('#006600'), 1);
-        homeContainer.add(this.graphics.fillRoundedRect(this.scale.width / 2 - 300, 350, 600, 300, 30));
-        const sectionAButton = this.add.text(this.scale.width / 2 - 190, this.scale.height / 2 + 15, 'Section A', {
-            fontSize: `24px`,
+        const filler = this.graphics.fillRoundedRect(this.scale.width / 2 - 200, 290, 400, 360, 30);
+        homeContainer.add(filler);
+        const viewButton = this.add.text(this.scale.width / 2 - 60, 290 - 15, 'View', {
+            fontSize: '24px',
             color: '#FFFFFF',
             padding: { x: 10, y: 5 },
-            align: 'center'
+            align: 'center',
+            backgroundColor: '#0e9e0e',
         })
         .setOrigin(0.5, 0.5)
-        .setPadding(10)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => this.handlePdfChoice(2, 1, this.scale.width / 2))
-        .on('pointerover', () => sectionAButton.setColor('#3333ff'))
-        .on('pointerout', () => sectionAButton.setColor('#FFFFFF'));
-        const sectionBButton = this.add.text(this.scale.width / 2, this.scale.height / 2 + 15, 'Section B', {
-            fontSize: `24px`,
+        .on('pointerdown', () => { this.handlePdfChoice(2, this.scale.width / 2); })
+        .on('pointerover', () => viewButton.setColor('#3f3fe0'))
+        .on('pointerout', () => viewButton.setColor('#FFFFFF'));
+        homeContainer.add(viewButton);
+        const downloadButton = this.add.text(this.scale.width / 2 + 40, 290 - 15, 'Download', {
+            fontSize: '24px',
             color: '#FFFFFF',
             padding: { x: 10, y: 5 },
-            align: 'center'
+            align: 'center',
+            backgroundColor: '#0e9e0e',
         })
         .setOrigin(0.5, 0.5)
-        .setPadding(10)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => this.handlePdfChoice(2, 2, this.scale.width / 2))
-        .on('pointerover', () => sectionBButton.setColor('#3333ff'))
-        .on('pointerout', () => sectionBButton.setColor('#FFFFFF'));
-        const sectionCButton = this.add.text(this.scale.width / 2 + 190, this.scale.height / 2 + 15, 'Section C', {
-            fontSize: `24px`,
-            color: '#FFFFFF',
-            padding: { x: 10, y: 5 },
-            align: 'center'
+        .on('pointerdown', () => { this.handlePdfChoice(1, this.scale.width / 2); })
+        .on('pointerover', () => downloadButton.setColor('#3f3fe0'))
+        .on('pointerout', () => downloadButton.setColor('#FFFFFF'));
+        homeContainer.add(downloadButton);
+        let dropdownButton = this.add.text(Math.floor(this.scale.width / 2), Math.floor(370), 'Select Form', {
+            backgroundColor: '#000',
+            color: '#fff',
+            fontSize: '20px',
+            fontFamily: 'Times New Roman',
+            padding: { x: 10, y: 5 }
         })
-        .setOrigin(0.5, 0.5)
-        .setPadding(10)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => this.handlePdfChoice(2, 3, this.scale.width / 2))
-        .on('pointerover', () => sectionCButton.setColor('#3333ff'))
-        .on('pointerout', () => sectionCButton.setColor('#FFFFFF'));
-        const year1Button = this.add.text(this.scale.width / 2, this.scale.height / 2 + 60, '2024', {
-            fontSize: `24px`,
-            color: '#FFFFFF',
-            padding: { x: 10, y: 5 },
-            align: 'center'
-        })
         .setOrigin(0.5, 0.5)
-        .setPadding(10)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => {year1Button.setColor('#000000'); this.yearSelected=2024;});
-        homeContainer.add(year1Button);
-        homeContainer.add(sectionAButton);
-        homeContainer.add(sectionBButton);
-        homeContainer.add(sectionCButton);
-        homeContainer.add(
-            this.add.text(this.scale.width / 2 - 150, this.scale.height / 2 + 110, 'View', {
-                fontSize: `24px`,
-                color: '#FFFFFF',
-                padding: { x: 10, y: 5 },
-                align: 'center'
+        .on('pointerdown', () => {optionsContainer.setVisible(true);});
+        let optionsContainer = this.add.container(dropdownButton.x, dropdownButton.y + 40).setVisible(false);
+        let options = ['Section A', 'Section B', 'Section C'];
+        options.forEach((opt, index) => {
+            let optionText = this.add.text(0, index * 30, opt, {
+                backgroundColor: '#333',
+                color: '#fff',
+                fontSize: '20px',
+                fontFamily: 'Times New Roman',
+                padding: { x: 5, y: 2 }
             })
             .setOrigin(0.5, 0.5)
-            .setInteractive({ useHandCursor: true })
-        );
-        homeContainer.add(
-            this.add.text(this.scale.width / 2 + 150, this.scale.height / 2 + 110, 'Download', {
-                fontSize: `24px`,
-                color: '#FFFFFF',
-                padding: { x: 10, y: 5 },
-                align: 'center'
+            .on('pointerdown', () => {optionsContainer.setVisible(false); this.formSelected = opt; dropdownButton.setText(opt);})
+            .setInteractive({ useHandCursor: true });
+
+            optionsContainer.add(optionText);
+        });
+        let dropdownButton2 = this.add.text(Math.floor(this.scale.width / 2), Math.floor(420 + 3 * 35), 'Select Year', {
+            backgroundColor: '#000',
+            color: '#fff',
+            fontSize: '20px',
+            fontFamily: 'Times New Roman',
+            padding: { x: 10, y: 5 }
+        })
+        .setInteractive({ useHandCursor: true })
+        .setOrigin(0.5, 0.5)
+        .on('pointerdown', () => {optionsContainer2.setVisible(true);});
+        let optionsContainer2 = this.add.container(dropdownButton2.x, dropdownButton2.y + 40).setVisible(false);
+        let options2 = ['2023', '2024'];
+        options2.forEach((opt, index) => {
+            let optionText2 = this.add.text(0, index * 30, opt, {
+                backgroundColor: '#333',
+                color: '#fff',
+                fontSize: '20px',
+                fontFamily: 'Times New Roman',
+                padding: { x: 5, y: 2 }
             })
             .setOrigin(0.5, 0.5)
-            .setInteractive({ useHandCursor: true })
-        );
+            .on('pointerdown', () => {optionsContainer2.setVisible(false); this.yearSelected = Number(opt); dropdownButton2.setText(`${this.yearSelected}`);})
+            .setInteractive({ useHandCursor: true });
+
+            optionsContainer2.add(optionText2);
+        });
+        homeContainer.add([optionsContainer, optionsContainer2, dropdownButton, dropdownButton2]);
+        homeContainer.add(this.add.text(dropdownButton.x, dropdownButton.y - 30, 'Form:', {fontFamily: 'Helvetica'}).setOrigin(0.5, 0.5));
+        homeContainer.add(this.add.text(dropdownButton2.x, dropdownButton2.y - 30, 'Year:', {fontFamily: 'Helvetica'}).setOrigin(0.5, 0.5));
         this.tabContainers['Home'] = homeContainer;
 
         // Resume Tab Container
@@ -320,14 +324,14 @@ export class Start extends Phaser.Scene {
         };
     };
 
-    loadPdf(section, x) {
+    loadPdf(x) {
         let pdfUrl = null;
 
-        if (section === 1 && this.yearSelected) {
+        if (this.formSelected === 'Section A' && this.yearSelected) {
             pdfUrl = `./assets/section-a-${this.yearSelected}.pdf`
-        } else if (section === 2 && this.yearSelected) {
+        } else if (this.formSelected === 'Section B' && this.yearSelected) {
             pdfUrl = `./assets/section-b-${this.yearSelected}.pdf`
-        } else if (section === 3 && this.yearSelected) {
+        } else if (this.formSelected === 'Section C' && this.yearSelected) {
             pdfUrl = `./assets/section-c-${this.yearSelected}.pdf`
         } else {
             return
@@ -366,13 +370,13 @@ export class Start extends Phaser.Scene {
                         pageElement.setInteractive();
                         pdfContainer.add(pageElement);
 
-                        pageElement.node.addEventListener('click', (event) => {
+                        pageElement.node.addEventListener('wheel', (event) => {
                             event.stopPropagation();
                         });
 
                         if (pageNum === pdf.numPages) {
                             setupScrollablePanel();
-                        };
+                        }
                     });
                 });
             };
@@ -380,7 +384,7 @@ export class Start extends Phaser.Scene {
             for (let i = 1; i <= numPages; i++) {
                 renderPage(i);
             };
-        })  .catch(err => {
+            }).catch(err => {
                 console.error('Error loading PDF: ', err);
             });
 
@@ -392,31 +396,33 @@ export class Start extends Phaser.Scene {
             pdfContainer.setMask(mask);
 
             const scrollSpeed = 30;
-            this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => { // Yes 4 of these values are unused but they are still passed
+            this.input.on('wheel', (pointer, currentlyOver, deltaX, deltaY, deltaZ, event) => {
                 pdfContainer.y -= Phaser.Math.Clamp(deltaY, -scrollSpeed, scrollSpeed);
                 pdfContainer.y = Phaser.Math.Clamp(pdfContainer.y, -totalHeight + 600, 0);
             });
         };
     };
 
-    handlePdfChoice(action, section, xIfLoaded) {
+    handlePdfChoice(action, xIfLoaded) {
         let sectionStr = null;
 
-        if (section === 1) {
-            sectionStr = 'a'
-        } else if (section === 2) {
-            sectionStr = 'b'
-        } else if (section === 3) {
-            sectionStr = 'c'
+        if (this.formSelected === 'Section A' && this.yearSelected) {
+            sectionStr = 'a';
+        } else if (this.formSelected === 'Section B' && this.yearSelected) {
+            sectionStr = 'b';
+        } else if (this.formSelected === 'Section C' && this.yearSelected) {
+            sectionStr = 'c';
+        } else {
+            return 1
         };
 
         if (action === 1) {
             const link = document.createElement('a');
             link.href = `./assets/section-${sectionStr}-${this.yearSelected}.pdf`;
-            link.download = url.split('/').pop();
+            link.download = `./assets/section-${sectionStr}-${this.yearSelected}.pdf`.split('/').pop();
             link.click();
         } else {
-            this.loadPdf(section, xIfLoaded);
+            this.loadPdf(xIfLoaded);
         };
     };
 };
