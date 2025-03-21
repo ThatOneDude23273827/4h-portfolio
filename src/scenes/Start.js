@@ -330,7 +330,7 @@ export class Start extends Phaser.Scene {
             }
         };
 
-        window.location.href = `4h-portfolio/src/pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
+        window.location.href = `/4h-portfolio/src/pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
     };
 
     handlePdfChoice(action) {
@@ -348,8 +348,8 @@ export class Start extends Phaser.Scene {
 
         if (action === 1) {
             const link = document.createElement('a');
-            link.href = `../assets/section-${sectionStr}-${this.yearSelected}.pdf`;
-            link.download = `../assets/section-${sectionStr}-${this.yearSelected}.pdf`.split('/').pop();
+            link.href = `/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
+            link.download = `/assets/section-${sectionStr}-${this.yearSelected}.pdf`.split('/').pop();
             link.click();
         } else {
             this.loadPdf();
