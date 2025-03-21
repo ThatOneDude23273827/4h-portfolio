@@ -330,9 +330,27 @@ export class Start extends Phaser.Scene {
 
         if (action === 1) {
             const link = document.createElement('a');
-            link.href = `https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
-            link.download = `section-${sectionStr}-${this.yearSelected}.pdf`
-            link.click();
+            const fileUrl = `https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/section-${sectionStr}-${yearSelected}.pdf`;
+            fetch(fileUrl)
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.href = url;
+                link.download = `section-${sectionStr}-${yearSelected}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
         } else {
             this.loadPdf();
         };
