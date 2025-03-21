@@ -115,7 +115,7 @@ export class Start extends Phaser.Scene {
         })
         .setOrigin(0.5, 0.5)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => { this.handlePdfChoice(2, this.scale.width / 2); })
+        .on('pointerdown', () => { this.handlePdfChoice(2); })
         .on('pointerover', () => viewButton.setColor('#3f3fe0'))
         .on('pointerout', () => viewButton.setColor('#FFFFFF'));
         homeContainer.add(viewButton);
@@ -128,7 +128,7 @@ export class Start extends Phaser.Scene {
         })
         .setOrigin(0.5, 0.5)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => { this.handlePdfChoice(1, this.scale.width / 2); })
+        .on('pointerdown', () => { this.handlePdfChoice(1); })
         .on('pointerover', () => downloadButton.setColor('#3f3fe0'))
         .on('pointerout', () => downloadButton.setColor('#FFFFFF'));
         homeContainer.add(downloadButton);
@@ -324,7 +324,7 @@ export class Start extends Phaser.Scene {
         };
     };
 
-    loadPdf(x) {
+    loadPdf() {
         let pdfUrl = null;
 
         if (this.formSelected === 'Section A' && this.yearSelected) {
@@ -337,73 +337,10 @@ export class Start extends Phaser.Scene {
             return
         };
 
-        const pdfContainer = this.add.container(x, 0);
-
-        const rect = this.add.image(
-            this.scale.width / 2, this.scale.height / 2, 'gameBG'
-        );
-        rect.setInteractive({ useHandCursor: true });
-        rect.setOrigin(0.5, 0.5);
-        rect.setDisplaySize(this.scale.width, this.scale.height);
-        rect.on('pointerdown', () => {
-            pdfContainer.destroy();
-            rect.destroy();
-        });
-
-        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-            const numPages = pdf.numPages;
-
-            const renderPage = (pageNum) => {
-                pdf.getPage(pageNum).then(page => {
-                    const scale = 1.5;
-                    const viewport = page.getViewport({ scale });
-                    const canvas = document.createElement('canvas');
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
-                    const context = canvas.getContext('2d');
-                    const renderContext = {
-                        canvasContext: context,
-                        viewport: viewport
-                    };
-                    page.render(renderContext).promise.then(() => {
-                        const pageElement = this.add.dom(0, viewport.height * (pageNum - 1), canvas).setOrigin(0.5, 0);
-                        pageElement.setInteractive();
-                        pdfContainer.add(pageElement);
-
-                        pageElement.node.addEventListener('wheel', (event) => {
-                            event.stopPropagation();
-                        });
-
-                        if (pageNum === pdf.numPages) {
-                            setupScrollablePanel();
-                        }
-                    });
-                });
-            };
-
-            for (let i = 1; i <= numPages; i++) {
-                renderPage(i);
-            };
-            }).catch(err => {
-                console.error('Error loading PDF: ', err);
-            });
-
-        const setupScrollablePanel = () => {
-            const totalHeight = pdfContainer.list.reduce((acc, page) => acc + page.height, 0);
-            const maskShape = this.make.graphics();
-            maskShape.fillRect(this.scale.width / 2, this.scale.height / 2, 800, 600);
-            const mask = maskShape.createGeometryMask();
-            pdfContainer.setMask(mask);
-
-            const scrollSpeed = 30;
-            this.input.on('wheel', (pointer, currentlyOver, deltaX, deltaY, deltaZ, event) => {
-                pdfContainer.y -= Phaser.Math.Clamp(deltaY, -scrollSpeed, scrollSpeed);
-                pdfContainer.y = Phaser.Math.Clamp(pdfContainer.y, -totalHeight + 600, 0);
-            });
-        };
+        window.location.href = `../src/pdfReader/src/index.html?file=${encodeURIComponent(pdfUrl)}`;
     };
 
-    handlePdfChoice(action, xIfLoaded) {
+    handlePdfChoice(action) {
         let sectionStr = null;
 
         if (this.formSelected === 'Section A' && this.yearSelected) {
@@ -422,7 +359,7 @@ export class Start extends Phaser.Scene {
             link.download = `./assets/section-${sectionStr}-${this.yearSelected}.pdf`.split('/').pop();
             link.click();
         } else {
-            this.loadPdf(xIfLoaded);
+            this.loadPdf();
         };
     };
 };
