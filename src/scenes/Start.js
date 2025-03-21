@@ -303,11 +303,11 @@ export class Start extends Phaser.Scene {
         let pdfUrl = null;
 
         if (this.formSelected === 'Section A' && this.yearSelected) {
-            pdfUrl = `/src/assets/section-a-${this.yearSelected}.pdf`;
+            pdfUrl = `/4h-portfolio/src/pdfReader/src/assets/section-a-${this.yearSelected}.pdf`;
         } else if (this.formSelected === 'Section B' && this.yearSelected) {
-            pdfUrl = `/src/assets/section-b-${this.yearSelected}.pdf`;
+            pdfUrl = `/4h-portfolio/src/pdfReader/src/assets/section-b-${this.yearSelected}.pdf`;
         } else if (this.formSelected === 'Section C' && this.yearSelected) {
-            pdfUrl = `/src/assets/section-c-${this.yearSelected}.pdf`;
+            pdfUrl = `/4h-portfolio/src/pdfReader/src/assets/section-c-${this.yearSelected}.pdf`;
         } else {
             return
         };
@@ -348,8 +348,8 @@ export class Start extends Phaser.Scene {
 
         if (action === 1) {
             const link = document.createElement('a');
-            link.href = `/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
-            link.download = `/src//assets/section-${sectionStr}-${this.yearSelected}.pdf`.split('/').pop();
+            link.href = `/`;
+            link.download = `4h-porfolio/src/pdfReader/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`.split('/').pop();
             link.click();
         } else {
             this.loadPdf();
