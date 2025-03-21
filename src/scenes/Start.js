@@ -303,11 +303,11 @@ export class Start extends Phaser.Scene {
         let pdfUrl = null;
 
         if (this.formSelected === 'Section A' && this.yearSelected) {
-            pdfUrl = `../assets/section-a-${this.yearSelected}.pdf`
+            pdfUrl = `/src/assets/section-a-${this.yearSelected}.pdf`;
         } else if (this.formSelected === 'Section B' && this.yearSelected) {
-            pdfUrl = `../assets/section-b-${this.yearSelected}.pdf`
+            pdfUrl = `/src/assets/section-b-${this.yearSelected}.pdf`;
         } else if (this.formSelected === 'Section C' && this.yearSelected) {
-            pdfUrl = `../assets/section-c-${this.yearSelected}.pdf`
+            pdfUrl = `/src/assets/section-c-${this.yearSelected}.pdf`;
         } else {
             return
         };
@@ -348,8 +348,8 @@ export class Start extends Phaser.Scene {
 
         if (action === 1) {
             const link = document.createElement('a');
-            link.href = `/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
-            link.download = `/assets/section-${sectionStr}-${this.yearSelected}.pdf`.split('/').pop();
+            link.href = `/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
+            link.download = `/src//assets/section-${sectionStr}-${this.yearSelected}.pdf`.split('/').pop();
             link.click();
         } else {
             this.loadPdf();
