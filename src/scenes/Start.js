@@ -12,6 +12,7 @@ export class Start extends Phaser.Scene {
         this.load.image('bg', './assets/bg.jpg');
         this.load.image('gameBG', './assets/code.jpg');
         this.load.image('clover', './assets/clover.png');
+        this.load.image('linkIcon', './assets/link.png');
     };
 
     create() {
@@ -210,26 +211,42 @@ export class Start extends Phaser.Scene {
                 color: textColor
             }).setOrigin(0.5)
         );
-        let buttonText = 'Space Shooter Game';
+        let buttonText = 'RPG-Style Name Generator';
         let loadGameButton = this.add.text(80, this.scale.height / 2 * 0.25, 'Load ' + buttonText, {
             fontSize: '24px',
             color: '#15ff00ea',
             backgroundColor: '#247732',
             padding: { x: 10, y: 5 }
         });
-        showcaseContainer.add(loadGameButton
+        const rpgNameGenButton = loadGameButton
             .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Astral-Shooter/', 1)));
-        buttonText = 'RPG-Style Name Generator';
+            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Fantasy-Name-Generator/', 2));
+        showcaseContainer.add(rpgNameGenButton);
+        showcaseContainer.add(this.add.image(rpgNameGenButton.x - 15, this.scale.height / 2 * 0.3, 'linkIcon'));
+        buttonText = 'Space Shooter Game';
         loadGameButton = this.add.text(80, this.scale.height / 2 * 0.35, 'Load ' + buttonText, {
             fontSize: '24px',
             color: '#15ff00ea',
             backgroundColor: '#247732',
             padding: { x: 10, y: 5 }
         });
-        showcaseContainer.add(loadGameButton
+        const astralShooterButton = loadGameButton
             .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Fantasy-Name-Generator/', 2)));
+            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Astral-Shooter/', 1));
+        showcaseContainer.add(astralShooterButton);
+        showcaseContainer.add(this.add.image(astralShooterButton.x - 15, this.scale.height / 2 * 0.4, 'linkIcon')); // Add 0.5 to y position of the button
+        buttonText = 'LUA Web Console';
+        loadGameButton = this.add.text(80, this.scale.height / 2 * 0.45, 'Load ' + buttonText, {
+            fontSize: '24px',
+            color: '#15ff00ea',
+            backgroundColor: '#247732',
+            padding: { x: 10, y: 5 }
+        });
+        const luaConsoleButton = loadGameButton
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Lua-Web-Console/Main/luaConsole.html', 2));
+        showcaseContainer.add(luaConsoleButton);
+        showcaseContainer.add(this.add.image(luaConsoleButton.x - 15, this.scale.height / 2 * 0.5, 'linkIcon'));
         this.tabContainers['Showcase'] = showcaseContainer;
 
         // Initially, show only the Home container
