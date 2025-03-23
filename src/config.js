@@ -7,7 +7,7 @@ export const config = {
     width: 1280,
     height: 720,
     pixelArt: false,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#011121',
     scene: [
         Start
     ],

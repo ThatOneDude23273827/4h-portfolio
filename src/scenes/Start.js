@@ -187,6 +187,35 @@ export class Start extends Phaser.Scene {
         resumeContainer.add(resumeHeader);
         resumeContainer.add(this.add.rectangle(this.scale.width / 2, resumeHeader.y - 20, 200, 2, this.hexStringToNumber('#00FFFF')).setOrigin(0.5, 0.5));
         this.tabContainers['Resume'] = resumeContainer;
+        const resumeObjectiveText = this.add.text(this.scale.width / 2, this.scale.height / 2 - 150, 'The objective of this resume is to highlight skills and lessons learned through 4-H, other avenues in life,\nand more specifcally, through work in my project area. (Computers & Technology)', {
+            fontSize: '26px',
+            color: textColor,
+            fontFamily: 'Times New Roman',
+            align: 'center'
+        }).setOrigin(0.5, 0.5);
+        resumeContainer.add(resumeObjectiveText);
+        const skillsHeader = this.add.text(this.scale.width / 2, (this.scale.height / 2) - (this.scale.height * 0.1), 'Skills:', {
+            fontSize: '30px',
+            color: textColor,
+            fontFamily: 'Times New Roman',
+        }).setOrigin(0.5);
+        resumeContainer.add(skillsHeader);
+        const resumeSkillsText = this.add.text(this.scale.width / 2, skillsHeader.y + 40, 'I have learned many different skills through programming, detailed below:', {
+            fontSize: '26px',
+            color: textColor,
+            fontFamily: 'Times New Roman',
+            align: 'center'
+        }).setOrigin(0.5, 0.5);
+        resumeContainer.add(resumeSkillsText);
+        const leaderShipSkillsMenu = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Hello.', {
+            fontFamily: 'Times New Roman',
+            color: textColor,
+            align: 'center',
+            fontSize: '26px'
+        })
+        .setOrigin(0.5,0.5)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {});
 
         // Photos Tab Container
         let photosContainer = this.add.container(0, 0);
