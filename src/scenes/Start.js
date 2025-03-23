@@ -21,7 +21,7 @@ export class Start extends Phaser.Scene {
             .setOrigin(0.5, 0.5);
 
         // Background image cover
-        this.colorBlock = this.add.rectangle(this.scale.width / 2, this.scale.height / 2, this.scale.width * 0.93, 800, this.hexStringToNumber('#262926'))
+        this.colorBlock = this.add.rectangle(this.scale.width / 2, this.scale.height / 2, this.scale.width * 0.93, 800, this.hexStringToNumber('#011121'))
             .setOrigin(0.5, 0.5);
         
         // Tabs
@@ -33,8 +33,9 @@ export class Start extends Phaser.Scene {
             const fontSize = baseFontSize * (this.scale.width / 800);
             const button = this.add.text(xOffset, 10, name, {
                 fontSize: `${fontSize}px`,
-                color: '#15ff00ea',
-                backgroundColor: '#262926',
+                color: '#FFD700',
+                fontFamily: 'Helvetica',
+                backgroundColor: '#021a33',
                 padding: { x: 10, y: 5 },
                 align: 'center'
             })
@@ -43,21 +44,22 @@ export class Start extends Phaser.Scene {
                 .setInteractive({ useHandCursor: true })
                 .on('pointerdown', () => this.handleTabClick(name))
                 .on('pointerover', () => button.setColor('#FFFFFF'))
-                .on('pointerout', () => button.setColor('#15ff00ea'));
+                .on('pointerout', () => button.setColor('#FFD700'));
             xOffset += button.width + 20;
         });
 
         this.graphics = this.add.graphics();
 
-        this.initializeTabContent('#15ff00ea');
+        this.initializeTabContent('#FFD700');
 
         // Separation Bar
-        this.add.rectangle(this.scale.width / 2, 70, this.scale.width * 0.9, 2, this.hexStringToNumber('#FFFFFF')).setOrigin(0.5, 0);
-        
+        this.add.rectangle(this.scale.width / 2, 70, this.scale.width * 0.9, 2, this.hexStringToNumber('#00FFFF')).setOrigin(0.5, 0);
+
         // Name text
         this.add.text(this.scale.width - 150, 30, "Caleb Pickering's 4H Portfolio", {
             fontSize: '20px',
             color: '#FFFFFF',
+            fontFamily: 'Helvetica',
         }).setOrigin(1, 0);
 
         // 4-H Clover Icon
@@ -76,7 +78,8 @@ export class Start extends Phaser.Scene {
         homeContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Home', {
                 fontSize: '40px',
-                color: textColor
+                color: textColor,
+                fontFamily: 'Helvetica'
             }).setOrigin(0.5)
         );
         this.graphics.fillStyle(this.hexStringToNumber('#006600'), 1);
@@ -88,6 +91,7 @@ export class Start extends Phaser.Scene {
             padding: { x: 10, y: 5 },
             align: 'center',
             backgroundColor: '#0e9e0e',
+            fontFamily: 'Helvetica'
         })
         .setOrigin(0.5, 0.5)
         .setInteractive({ useHandCursor: true })
@@ -101,6 +105,7 @@ export class Start extends Phaser.Scene {
             padding: { x: 10, y: 5 },
             align: 'center',
             backgroundColor: '#0e9e0e',
+            fontFamily: 'Helvetica'
         })
         .setOrigin(0.5, 0.5)
         .setInteractive({ useHandCursor: true })
@@ -113,7 +118,7 @@ export class Start extends Phaser.Scene {
             color: '#fff',
             fontSize: '20px',
             fontFamily: 'Times New Roman',
-            padding: { x: 10, y: 5 }
+            padding: { x: 10, y: 5 },
         })
         .setInteractive({ useHandCursor: true })
         .setOrigin(0.5, 0.5)
@@ -170,15 +175,17 @@ export class Start extends Phaser.Scene {
         resumeContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Resume', {
                 fontSize: '40px',
-                color: textColor
+                color: textColor,
+                fontFamily: 'Helvetica',
             }).setOrigin(0.5)
         );
-        resumeContainer.add(
-            this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Resume Content Here', {
-                fontSize: '30px',
-                color: textColor
-            }).setOrigin(0.5),
-        );
+        const resumeHeader = this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Objective:', {
+            fontSize: '30px',
+            color: textColor,
+            fontFamily: 'Times New Roman',
+        }).setOrigin(0.5);
+        resumeContainer.add(resumeHeader);
+        resumeContainer.add(this.add.rectangle(this.scale.width / 2, resumeHeader.y - 20, 200, 2, this.hexStringToNumber('#00FFFF')).setOrigin(0.5, 0.5));
         this.tabContainers['Resume'] = resumeContainer;
 
         // Photos Tab Container
@@ -186,13 +193,15 @@ export class Start extends Phaser.Scene {
         photosContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Photos', {
                 fontSize: '40px',
-                color: textColor
+                color: textColor,
+                fontFamily: 'Helvetica',
             }).setOrigin(0.5)
         );
         photosContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Photos Content Here', {
                 fontSize: '30px',
-                color: textColor
+                color: textColor,
+                fontFamily: 'Helvetica',
             }).setOrigin(0.5)
         );
         this.tabContainers['Photos'] = photosContainer;
@@ -202,13 +211,15 @@ export class Start extends Phaser.Scene {
         showcaseContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Showcase', {
                 fontSize: '40px',
-                color: textColor
+                color: textColor,
+                fontFamily: 'Helvetica',
             }).setOrigin(0.5)
         );
         showcaseContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Showcase Content Here', {
                 fontSize: '30px',
-                color: textColor
+                color: textColor,
+                fontFamily: 'Helvetica',
             }).setOrigin(0.5)
         );
         let buttonText = 'RPG-Style Name Generator';
@@ -216,7 +227,8 @@ export class Start extends Phaser.Scene {
             fontSize: '24px',
             color: '#15ff00ea',
             backgroundColor: '#247732',
-            padding: { x: 10, y: 5 }
+            padding: { x: 10, y: 5 },
+            fontFamily: 'Helvetica',
         });
         const rpgNameGenButton = loadGameButton
             .setInteractive({ useHandCursor: true })
@@ -228,7 +240,8 @@ export class Start extends Phaser.Scene {
             fontSize: '24px',
             color: '#15ff00ea',
             backgroundColor: '#247732',
-            padding: { x: 10, y: 5 }
+            padding: { x: 10, y: 5 },
+            fontFamily: 'Helvetica',
         });
         const astralShooterButton = loadGameButton
             .setInteractive({ useHandCursor: true })
@@ -240,7 +253,8 @@ export class Start extends Phaser.Scene {
             fontSize: '24px',
             color: '#15ff00ea',
             backgroundColor: '#247732',
-            padding: { x: 10, y: 5 }
+            padding: { x: 10, y: 5 },
+            fontFamily: 'Helvetica',
         });
         const luaConsoleButton = loadGameButton
             .setInteractive({ useHandCursor: true })
