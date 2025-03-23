@@ -10,7 +10,7 @@ export class Start extends Phaser.Scene {
 
     preload() {
         this.load.image('bg', './assets/bg.jpg');
-        this.load.image('gameBG', './assets/code.jpg');
+        this.load.image('gameBG', './assets/code.png');
         this.load.image('clover', './assets/clover.png');
         this.load.image('linkIcon', './assets/link.png');
     };
@@ -207,15 +207,83 @@ export class Start extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5, 0.5);
         resumeContainer.add(resumeSkillsText);
-        const leaderShipSkillsMenu = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Hello.', {
+        const leadershipSkillsMenu = this.add.text(this.scale.width/2, this.scale.height / 2 + 35 + 13 + 40, 'Leadership', {
             fontFamily: 'Times New Roman',
-            color: textColor,
+            color: '#00FFFF',
             align: 'center',
             fontSize: '26px'
         })
         .setOrigin(0.5,0.5)
         .setInteractive({useHandCursor: true})
-        .on('pointerdown', () => {});
+        .on('pointerdown', () => {
+            leadershipSkillsMenu.setStroke('#24f0f0', 1);
+            citizenshipSkillsMenu.setStroke();
+            projectSkillsMenu.setStroke();
+            educationSkillsMenu.setStroke();
+        });
+        const citizenshipSkillsMenu = this.add.text(this.scale.width/2, this.scale.height / 2 + 70 + 13 + 40, 'Citizenship', {
+            fontFamily: 'Times New Roman',
+            color: '#00FFFF',
+            align: 'center',
+            fontSize: '26px'
+        })
+        .setOrigin(0.5,0.5)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {
+            citizenshipSkillsMenu.setStroke('#24f0f0', 1);
+            leadershipSkillsMenu.setStroke();
+            projectSkillsMenu.setStroke();
+            educationSkillsMenu.setStroke();
+        });
+        const projectSkillsMenu = this.add.text(this.scale.width/2, this.scale.height / 2 + 40, 'Computers\n& Technology', {
+            fontFamily: 'Times New Roman',
+            color: '#00FFFF',
+            align: 'center',
+            fontSize: '26px'
+        })
+        .setOrigin(0.5,0.5)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {
+            projectSkillsMenu.setStroke('#24f0f0', 1);
+            leadershipSkillsMenu.setStroke();
+            citizenshipSkillsMenu.setStroke();
+            educationSkillsMenu.setStroke();
+        });
+        const educationSkillsMenu = this.add.text(this.scale.width/2, this.scale.height / 2 + 40 + 13 + 105, 'Education', {
+            fontFamily: 'Times New Roman',
+            color: '#00FFFF',
+            align: 'center',
+            fontSize: '26px'
+        })
+        .setOrigin(0.5,0.5)
+        .setInteractive({useHandCursor: true})
+        .on('pointerdown', () => {
+            educationSkillsMenu.setStroke('#24f0f0', 1);
+            leadershipSkillsMenu.setStroke();
+            citizenshipSkillsMenu.setStroke();
+            projectSkillsMenu.setStroke();
+        });
+        projectSkillsMenu.emit('pointerdown');
+        let gridGraphics = this.add.graphics();
+        gridGraphics.lineStyle(2, this.hexStringToNumber('#00FFFF'), 1);
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        const skillButtons = [leadershipSkillsMenu, citizenshipSkillsMenu, projectSkillsMenu, educationSkillsMenu];
+        resumeContainer.add(skillButtons); 
+        skillButtons.forEach(button => {
+            let bounds = button.getBounds();
+            minX = Math.min(minX, bounds.x);
+            minY = Math.min(minY, bounds.y);
+            maxX = Math.max(maxX, bounds.x + bounds.width);
+            maxY = Math.max(maxY, bounds.y + bounds.height);
+        });
+        const padding = 10;
+        minX -= padding;
+        minY -= padding;
+        maxX += padding;
+        maxY += padding;
+        resumeContainer.add(gridGraphics.strokeLineShape(new Phaser.Geom.Line(maxX, minY, maxX, maxY))); // r
+        resumeContainer.add(gridGraphics.strokeLineShape(new Phaser.Geom.Line(minX, maxY, minX, minY))); // l
+        resumeContainer.add(gridGraphics.strokeLineShape(new Phaser.Geom.Line(maxX, maxY, minX, maxY))); // b
 
         // Photos Tab Container
         let photosContainer = this.add.container(0, 0);
