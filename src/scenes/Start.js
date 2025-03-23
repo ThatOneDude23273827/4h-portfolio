@@ -13,6 +13,10 @@ export class Start extends Phaser.Scene {
         this.load.image('gameBG', './assets/code.png');
         this.load.image('clover', './assets/clover.png');
         this.load.image('linkIcon', './assets/link.png');
+        this.load.image('brackets', './assets/brackets.png');
+        this.load.image('medal', './assets/medal.png');
+        this.load.image('textBox', './assets/text.png');
+        this.load.image('cube+', './assets/cube+.png');
     };
 
     create() {
@@ -194,13 +198,19 @@ export class Start extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5, 0.5);
         resumeContainer.add(resumeObjectiveText);
-        const skillsHeader = this.add.text(this.scale.width / 2, (this.scale.height / 2) - (this.scale.height * 0.1), 'Skills:', {
+        const skillsHeader = this.add.text(this.scale.width / 2, (this.scale.height / 2) - (this.scale.height * 0.1), 'Experiences:', {
             fontSize: '30px',
             color: textColor,
             fontFamily: 'Times New Roman',
         }).setOrigin(0.5);
         resumeContainer.add(skillsHeader);
-        const resumeSkillsText = this.add.text(this.scale.width / 2, skillsHeader.y + 40, 'I have learned many different skills through programming, detailed below:', {
+        function onHoverSkillButton(button) {
+            button.setColor('#03a1fc');
+        };
+        function onUnHoverSkillButton(button) {
+            button.setColor('#00FFFF');
+        };
+        const resumeSkillsText = this.add.text(this.scale.width / 2, skillsHeader.y + 40, 'I have learned many different things through programming, detailed below:', {
             fontSize: '26px',
             color: textColor,
             fontFamily: 'Times New Roman',
@@ -219,8 +229,9 @@ export class Start extends Phaser.Scene {
             leadershipSkillsMenu.setStroke('#24f0f0', 1);
             citizenshipSkillsMenu.setStroke();
             projectSkillsMenu.setStroke();
-            educationSkillsMenu.setStroke();
         });
+        leadershipSkillsMenu.on('pointerover', () => {onHoverSkillButton(leadershipSkillsMenu)});
+        leadershipSkillsMenu.on('pointerout', () => {onUnHoverSkillButton(leadershipSkillsMenu)});
         const citizenshipSkillsMenu = this.add.text(this.scale.width/2, this.scale.height / 2 + 70 + 13 + 40, 'Citizenship', {
             fontFamily: 'Times New Roman',
             color: '#00FFFF',
@@ -233,8 +244,9 @@ export class Start extends Phaser.Scene {
             citizenshipSkillsMenu.setStroke('#24f0f0', 1);
             leadershipSkillsMenu.setStroke();
             projectSkillsMenu.setStroke();
-            educationSkillsMenu.setStroke();
         });
+        citizenshipSkillsMenu.on('pointerover', () => {onHoverSkillButton(citizenshipSkillsMenu)});
+        citizenshipSkillsMenu.on('pointerout', () => {onUnHoverSkillButton(citizenshipSkillsMenu)});
         const projectSkillsMenu = this.add.text(this.scale.width/2, this.scale.height / 2 + 40, 'Computers\n& Technology', {
             fontFamily: 'Times New Roman',
             color: '#00FFFF',
@@ -247,27 +259,14 @@ export class Start extends Phaser.Scene {
             projectSkillsMenu.setStroke('#24f0f0', 1);
             leadershipSkillsMenu.setStroke();
             citizenshipSkillsMenu.setStroke();
-            educationSkillsMenu.setStroke();
         });
-        const educationSkillsMenu = this.add.text(this.scale.width/2, this.scale.height / 2 + 40 + 13 + 105, 'Education', {
-            fontFamily: 'Times New Roman',
-            color: '#00FFFF',
-            align: 'center',
-            fontSize: '26px'
-        })
-        .setOrigin(0.5,0.5)
-        .setInteractive({useHandCursor: true})
-        .on('pointerdown', () => {
-            educationSkillsMenu.setStroke('#24f0f0', 1);
-            leadershipSkillsMenu.setStroke();
-            citizenshipSkillsMenu.setStroke();
-            projectSkillsMenu.setStroke();
-        });
+        projectSkillsMenu.on('pointerover', () => {onHoverSkillButton(projectSkillsMenu)});
+        projectSkillsMenu.on('pointerout', () => {onUnHoverSkillButton(projectSkillsMenu)});
         projectSkillsMenu.emit('pointerdown');
         let gridGraphics = this.add.graphics();
         gridGraphics.lineStyle(2, this.hexStringToNumber('#00FFFF'), 1);
         let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-        const skillButtons = [leadershipSkillsMenu, citizenshipSkillsMenu, projectSkillsMenu, educationSkillsMenu];
+        const skillButtons = [leadershipSkillsMenu, citizenshipSkillsMenu, projectSkillsMenu];
         resumeContainer.add(skillButtons); 
         skillButtons.forEach(button => {
             let bounds = button.getBounds();
@@ -284,6 +283,32 @@ export class Start extends Phaser.Scene {
         resumeContainer.add(gridGraphics.strokeLineShape(new Phaser.Geom.Line(maxX, minY, maxX, maxY))); // r
         resumeContainer.add(gridGraphics.strokeLineShape(new Phaser.Geom.Line(minX, maxY, minX, minY))); // l
         resumeContainer.add(gridGraphics.strokeLineShape(new Phaser.Geom.Line(maxX, maxY, minX, maxY))); // b
+        resumeContainer.add(gridGraphics.strokeLineShape(new Phaser.Geom.Line(this.scale.width / 2 - 500, this.scale.height / 2 + 40 - 26 - 10 - 2, this.scale.width / 2 + 500, this.scale.height / 2 + 40 - 26 - 10 - 2)));
+        const medalIcon = this.add.image(this.scale.width / 2 + 110, this.scale.height / 2 + 40 - 26 - 10 - 2 + 25, 'medal'); 
+        const bracketsIcon = this.add.image(this.scale.width / 2 + 315, this.scale.height / 2 + 40 - 26 - 10 - 2 + 25, 'brackets');
+        const textIcon = this.add.image(this.scale.width / 2 - 110, this.scale.height / 2 + 40 - 26 - 10 - 2 + 25, 'textBox');
+        const cubeIcon = this.add.image(this.scale.width / 2 - 315, this.scale.height / 2 + 40 - 26 - 10 - 2 + 25, 'cube+');
+        medalIcon.scale = 1.5;
+        bracketsIcon.scale - 1.5;
+        textIcon.scale = 1.5;
+        cubeIcon.scale = 2.2;
+        resumeContainer.add(this.add.text(this.scale.width / 2 + 110 + (40 * 1.9), this.scale.height / 2 + 40 - 26 - 10 - 2 + 25, 'Awards', {
+            fontFamily: 'Helvetica',
+            fontSize: '32px'
+        }).setOrigin(0.5,0.5));
+        resumeContainer.add(this.add.text(this.scale.width / 2 + 315 + (40 * 2) + 5, this.scale.height / 2 + 40 - 26 - 10 - 2 + 25, 'Projects', {
+            fontFamily: 'Helvetica',
+            fontSize: '32px'
+        }).setOrigin(0.5,0.5));
+        resumeContainer.add(this.add.text(this.scale.width / 2 - 10 - 5 - 4 - 110 - (40 * 1.9), this.scale.height / 2 + 40 - 26 - 10 - 2 + 25, 'Education', {
+            fontFamily: 'Helvetica',
+            fontSize: '32px'
+        }).setOrigin(0.5,0.5));
+        resumeContainer.add(this.add.text(this.scale.width / 2 - 4 - 315 - (40 * 1.9), this.scale.height / 2 + 40 - 26 - 10 - 2 + 25, 'Hobbies', {
+            fontFamily: 'Helvetica',
+            fontSize: '32px'
+        }).setOrigin(0.5,0.5));
+        resumeContainer.add([medalIcon, bracketsIcon, textIcon, cubeIcon]);
 
         // Photos Tab Container
         let photosContainer = this.add.container(0, 0);
