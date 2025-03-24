@@ -18,6 +18,10 @@ export class Start extends Phaser.Scene {
         this.load.image('medal', './assets/medal.png');
         this.load.image('textBox', './assets/text.png');
         this.load.image('cube+', './assets/cube+.png');
+        this.load.image('arrowRight', './assets/arrow-right.png');
+        this.load.image('arrowLeft', './assets/arrow-left.png');
+        this.load.image('arrowRight2', './assets/double-arrows-right.png');
+        this.load.image('arrowLeft2', './assets/double-arrows-left.png');
 
         // Slides
         this.load.image('slide1', './assets/presentation/Slide1.PNG');
@@ -95,21 +99,21 @@ export class Start extends Phaser.Scene {
     initializeTabContent(textColor) {
         // Home Tab Container
         let homeContainer = this.add.container(0, 0);
-        this.graphics.fillStyle(this.hexStringToNumber('#006600'), 1);
+        this.graphics.fillStyle(this.hexStringToNumber('#147d7d'), 1);
         const filler = this.graphics.fillRoundedRect(this.scale.width / 2 - 200, 290, 400, 360, 30);
         homeContainer.add(filler);
-        const viewButton = this.add.text(this.scale.width / 2 - 60, 290 - 15, 'View', {
+        const viewButton = this.add.text(this.scale.width / 2 - 58, 290 - 15, 'View', {
             fontSize: '24px',
             color: '#FFFFFF',
             padding: { x: 10, y: 5 },
             align: 'center',
-            backgroundColor: '#0e9e0e',
+            backgroundColor: '#190dac',
             fontFamily: 'Helvetica'
         })
         .setOrigin(0.5, 0.5)
         .setInteractive({ useHandCursor: true })
         .on('pointerdown', () => { this.handlePdfChoice(2); })
-        .on('pointerover', () => viewButton.setColor('#3f3fe0'))
+        .on('pointerover', () => viewButton.setColor('#fb8afc'))
         .on('pointerout', () => viewButton.setColor('#FFFFFF'));
         homeContainer.add(viewButton);
         const downloadButton = this.add.text(this.scale.width / 2 + 40, 290 - 15, 'Download', {
@@ -117,13 +121,13 @@ export class Start extends Phaser.Scene {
             color: '#FFFFFF',
             padding: { x: 10, y: 5 },
             align: 'center',
-            backgroundColor: '#0e9e0e',
+            backgroundColor: '#190dac',
             fontFamily: 'Helvetica'
         })
         .setOrigin(0.5, 0.5)
         .setInteractive({ useHandCursor: true })
         .on('pointerdown', () => { this.handlePdfChoice(1); })
-        .on('pointerover', () => downloadButton.setColor('#3f3fe0'))
+        .on('pointerover', () => downloadButton.setColor('#fb8afc'))
         .on('pointerout', () => downloadButton.setColor('#FFFFFF'));
         homeContainer.add(downloadButton);
         let dropdownButton = this.add.text(Math.floor(this.scale.width / 2), Math.floor(370), 'Select Form', {
@@ -388,6 +392,23 @@ export class Start extends Phaser.Scene {
             });
         };
         showSlide(currentSlideIndex);
+        const nextSlideButton = this.add.image(this.scale.width / 2 + 420, this.scale.height / 2, 'arrowRight');
+        const prevSlideButton = this.add.image(this.scale.width / 2 - 420, this.scale.height / 2, 'arrowLeft');
+        nextSlideButton.scale = 2;
+        prevSlideButton.scale = 2;
+        nextSlideButton.setInteractive({ useHandCursor: true });
+        prevSlideButton.setInteractive({ useHandCursor: true });
+        nextSlideButton.on('pointerdown', () => {currentSlideIndex = (currentSlideIndex + 1) % slides.length; showSlide(currentSlideIndex);});
+        prevSlideButton.on('pointerdown', () => {currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length; showSlide(currentSlideIndex);});
+        const firstSlideButton = this.add.image(this.scale.width / 2 + 460, this.scale.height / 2, 'arrowRight2');
+        const lastSlideButton = this.add.image(this.scale.width / 2 - 460, this.scale.height / 2, 'arrowLeft2');
+        firstSlideButton.scale = 2;
+        lastSlideButton.scale = 2;
+        firstSlideButton.setInteractive({ useHandCursor: true });
+        lastSlideButton.setInteractive({ useHandCursor: true });
+        firstSlideButton.on('pointerdown', () => {currentSlideIndex = 11; showSlide(currentSlideIndex);});
+        lastSlideButton.on('pointerdown', () => {currentSlideIndex = 0; showSlide(currentSlideIndex);});
+        showcaseContainer.add([nextSlideButton, prevSlideButton, firstSlideButton, lastSlideButton]);
 
         // Initially, show only the Home container
         this.handleTabClick('Home');
