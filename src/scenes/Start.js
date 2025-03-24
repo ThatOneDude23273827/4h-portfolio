@@ -24,6 +24,11 @@ export class Start extends Phaser.Scene {
         this.load.image('arrowLeft2', './assets/double-arrows-left.png');
         this.load.image('homePicture', './assets/pic/picture.jpg');
         this.load.image('homePicture2', './assets/pic/picture2.jpg');
+        this.load.image('picture3', './assets/pic/picture3.jpg');
+        this.load.image('picture4', './assets/pic/picture4.jpg');
+        this.load.image('picture5', './assets/pic/picture5.jpg');
+        this.load.image('picture6', './assets/pic/picture6.jpg');
+        this.load.image('picture7', './assets/pic/picture7.jpg');
 
         // Slides
         this.load.image('slide1', './assets/presentation/Slide1.PNG');
@@ -344,13 +349,54 @@ export class Start extends Phaser.Scene {
 
         // Photos Tab Container
         let photosContainer = this.add.container(0, 0);
-        photosContainer.add(
-            this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Photos Content Here', {
-                fontSize: '30px',
-                color: textColor,
-                fontFamily: 'Helvetica',
-            }).setOrigin(0.5)
+        const leadershipIndex = [2, 3]; // min, max
+        const citizenIndex = [4, 7];
+        const projectIndex = [];
+        let projectHeader = this.add.text(
+            this.scale.width / 2 + this.scale.width / 2 / 2,
+            (this.scale.height / 2) * 1.5,
+            'Project Area',
+            { fontFamily: 'Helvetica', fontSize: '32px' }
         );
+        let leadershipHeader = this.add.text(
+            this.scale.width / 2 - this.scale.width / 2 / 2,
+            (this.scale.height / 2),
+            'Leadership',
+            { fontFamily: 'Helvetica', fontSize: '32px' }
+        );
+        let citizenshipHeader = this.add.text(
+            this.scale.width / 2 + this.scale.width / 2 / 2,
+            (this.scale.height / 2) * 0.5,
+            'Citizenship',
+            { fontFamily: 'Helvetica', fontSize: '32px' }
+        );
+        let citizenshipContainer = this.add.container(
+            citizenshipHeader.x + 50 + 20 + 20 + 5 - 10 - 5,
+            citizenshipHeader.y + citizenshipHeader.height + 10 + 50 + 50 + 30 + 10 - 15
+        );
+        const citizenshipImages = ['picture3', 'picture4', 'picture5', 'picture6', 'picture7'];
+        let citizenshipAreaIndex = 0;
+        let citizenshipImage = this.add.image(0, 0, citizenshipImages[citizenshipAreaIndex]).setOrigin(0.5);
+        citizenshipImage.scale = 0.25;
+        citizenshipContainer.add(citizenshipImage);
+        let arrowOffset = citizenshipImage.displayWidth / 2 + 20;
+        let arrowLeft = this.add.image(-arrowOffset, 0, 'arrowLeft')
+            .setInteractive({useHandCursor: true})
+            .setOrigin(0.5);
+        arrowLeft.on('pointerdown', () => {
+            citizenshipAreaIndex = (citizenshipAreaIndex - 1 + citizenshipImages.length) % citizenshipImages.length;
+            citizenshipImage.setTexture(citizenshipImages[citizenshipAreaIndex]);
+        });
+        citizenshipContainer.add(arrowLeft);
+        let arrowRight = this.add.image(arrowOffset, 0, 'arrowRight')
+            .setInteractive({useHandCursor: true})
+            .setOrigin(0.5);
+        arrowRight.on('pointerdown', () => {
+            citizenshipAreaIndex = (citizenshipAreaIndex + 1) % citizenshipImages.length;
+            citizenshipImage.setTexture(citizenshipImages[citizenshipAreaIndex]);
+        });
+        citizenshipContainer.add(arrowRight);
+        photosContainer.add([citizenshipHeader, leadershipHeader, citizenshipHeader, citizenshipContainer]);
         this.tabContainers['Photos'] = photosContainer;
 
         // Showcase Tab Container
