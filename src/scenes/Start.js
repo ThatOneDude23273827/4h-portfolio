@@ -6,6 +6,7 @@ export class Start extends Phaser.Scene {
         this.overlays = [];
         this.yearSelected = null;
         this.formSelected = null;
+        this.tabs = [];
     };
 
     preload() {
@@ -17,6 +18,20 @@ export class Start extends Phaser.Scene {
         this.load.image('medal', './assets/medal.png');
         this.load.image('textBox', './assets/text.png');
         this.load.image('cube+', './assets/cube+.png');
+
+        // Slides
+        this.load.image('slide1', './assets/presentation/slide1.PNG');
+        this.load.image('slide2', './assets/presentation/slide2.PNG');
+        this.load.image('slide3', './assets/presentation/slide3.PNG');
+        this.load.image('slide4', './assets/presentation/slide4.PNG');
+        this.load.image('slide5', './assets/presentation/slide5.PNG');
+        this.load.image('slide6', './assets/presentation/slide6.PNG');
+        this.load.image('slide7', './assets/presentation/slide7.PNG');
+        this.load.image('slide8', './assets/presentation/slide8.PNG');
+        this.load.image('slide9', './assets/presentation/slide9.PNG');
+        this.load.image('slide10', './assets/presentation/slide10.PNG');
+        this.load.image('slide11', './assets/presentation/slide11.PNG');
+        this.load.image('slide12', './assets/presentation/slide12.PNG');
     };
 
     create() {
@@ -37,7 +52,7 @@ export class Start extends Phaser.Scene {
             const fontSize = baseFontSize * (this.scale.width / 800);
             const button = this.add.text(xOffset, 10, name, {
                 fontSize: `${fontSize}px`,
-                color: '#FFD700',
+                color: '#FFFFFF',
                 fontFamily: 'Helvetica',
                 backgroundColor: '#021a33',
                 padding: { x: 10, y: 5 },
@@ -46,15 +61,16 @@ export class Start extends Phaser.Scene {
                 .setOrigin(0, 0)
                 .setPadding(10)
                 .setInteractive({ useHandCursor: true })
-                .on('pointerdown', () => this.handleTabClick(name))
-                .on('pointerover', () => button.setColor('#FFFFFF'))
-                .on('pointerout', () => button.setColor('#FFD700'));
+                .on('pointerdown', () => {this.handleTabClick(name); button.setBackgroundColor('#190dac'); this.resetButtons(button)})
+                .on('pointerover', () => button.setColor('#fb8afc'))
+                .on('pointerout', () => button.setColor('#FFFFFF'));
             xOffset += button.width + 20;
+            this.tabs.push(button);
         });
 
         this.graphics = this.add.graphics();
 
-        this.initializeTabContent('#FFD700');
+        this.initializeTabContent('#FFFFFF');
 
         // Separation Bar
         this.add.rectangle(this.scale.width / 2, 70, this.scale.width * 0.9, 2, this.hexStringToNumber('#00FFFF')).setOrigin(0.5, 0);
@@ -79,13 +95,6 @@ export class Start extends Phaser.Scene {
     initializeTabContent(textColor) {
         // Home Tab Container
         let homeContainer = this.add.container(0, 0);
-        homeContainer.add(
-            this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Home', {
-                fontSize: '40px',
-                color: textColor,
-                fontFamily: 'Helvetica'
-            }).setOrigin(0.5)
-        );
         this.graphics.fillStyle(this.hexStringToNumber('#006600'), 1);
         const filler = this.graphics.fillRoundedRect(this.scale.width / 2 - 200, 290, 400, 360, 30);
         homeContainer.add(filler);
@@ -176,13 +185,6 @@ export class Start extends Phaser.Scene {
 
         // Resume Tab Container
         let resumeContainer = this.add.container(0, 0);
-        resumeContainer.add(
-            this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Resume', {
-                fontSize: '40px',
-                color: textColor,
-                fontFamily: 'Helvetica',
-            }).setOrigin(0.5)
-        );
         const resumeHeader = this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Objective:', {
             fontSize: '30px',
             color: textColor,
@@ -313,13 +315,6 @@ export class Start extends Phaser.Scene {
         // Photos Tab Container
         let photosContainer = this.add.container(0, 0);
         photosContainer.add(
-            this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Photos', {
-                fontSize: '40px',
-                color: textColor,
-                fontFamily: 'Helvetica',
-            }).setOrigin(0.5)
-        );
-        photosContainer.add(
             this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Photos Content Here', {
                 fontSize: '30px',
                 color: textColor,
@@ -330,60 +325,69 @@ export class Start extends Phaser.Scene {
 
         // Showcase Tab Container
         let showcaseContainer = this.add.container(0, 0);
-        showcaseContainer.add(
-            this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'Showcase', {
-                fontSize: '40px',
-                color: textColor,
-                fontFamily: 'Helvetica',
-            }).setOrigin(0.5)
-        );
-        showcaseContainer.add(
-            this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Showcase Content Here', {
-                fontSize: '30px',
-                color: textColor,
-                fontFamily: 'Helvetica',
-            }).setOrigin(0.5)
-        );
         let buttonText = 'RPG-Style Name Generator';
-        let loadGameButton = this.add.text(80, this.scale.height / 2 * 0.25, 'Load ' + buttonText, {
+        let loadGameButton = this.add.text(Math.floor(this.scale.width / 3) + 24 + 15, this.scale.height * 0.85, 'Load ' + buttonText, {
             fontSize: '24px',
-            color: '#15ff00ea',
-            backgroundColor: '#247732',
+            color: '#44d9f3',
+            backgroundColor: '#0f0025',
             padding: { x: 10, y: 5 },
             fontFamily: 'Helvetica',
         });
         const rpgNameGenButton = loadGameButton
             .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Fantasy-Name-Generator/', 2));
+            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Fantasy-Name-Generator/', 3));
         showcaseContainer.add(rpgNameGenButton);
-        showcaseContainer.add(this.add.image(rpgNameGenButton.x - 15, this.scale.height / 2 * 0.3, 'linkIcon'));
+        showcaseContainer.add(this.add.image(rpgNameGenButton.x - 15, this.scale.height * 0.9 - 18, 'linkIcon'));
         buttonText = 'Space Shooter Game';
-        loadGameButton = this.add.text(80, this.scale.height / 2 * 0.35, 'Load ' + buttonText, {
+        loadGameButton = this.add.text(Math.floor(this.scale.width / 3) * 2 + 24 + 15, this.scale.height * 0.85, 'Load ' + buttonText, {
             fontSize: '24px',
-            color: '#15ff00ea',
-            backgroundColor: '#247732',
+            color: '#44d9f3',
+            backgroundColor: '#0f0025',
             padding: { x: 10, y: 5 },
             fontFamily: 'Helvetica',
         });
         const astralShooterButton = loadGameButton
             .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Astral-Shooter/', 1));
+            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Astral-Shooter/', 2));
         showcaseContainer.add(astralShooterButton);
-        showcaseContainer.add(this.add.image(astralShooterButton.x - 15, this.scale.height / 2 * 0.4, 'linkIcon')); // Add 0.5 to y position of the button
+        showcaseContainer.add(this.add.image(astralShooterButton.x - 15, this.scale.height * 0.9 - 18, 'linkIcon')); // Add 0.5 to y position of the button
         buttonText = 'LUA Web Console';
-        loadGameButton = this.add.text(80, this.scale.height / 2 * 0.45, 'Load ' + buttonText, {
+        loadGameButton = this.add.text(Math.floor(this.scale.width / 3) - this.scale.width * 0.3 + 60 + 24 + 15, this.scale.height * 0.85, 'Load ' + buttonText, {
             fontSize: '24px',
-            color: '#15ff00ea',
-            backgroundColor: '#247732',
+            color: '#44d9f3',
+            backgroundColor: '#0f0025',
             padding: { x: 10, y: 5 },
             fontFamily: 'Helvetica',
         });
         const luaConsoleButton = loadGameButton
             .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Lua-Web-Console/Main/luaConsole.html', 2));
+            .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Lua-Web-Console/Main/luaConsole.html', 1));
         showcaseContainer.add(luaConsoleButton);
-        showcaseContainer.add(this.add.image(luaConsoleButton.x - 15, this.scale.height / 2 * 0.5, 'linkIcon'));
+        showcaseContainer.add(this.add.image(luaConsoleButton.x - 15, this.scale.height * 0.9 - 18, 'linkIcon'));
         this.tabContainers['Showcase'] = showcaseContainer;
+        const slides = [];
+        slides.push(
+            this.add.image(0, 0, 'slide1'),
+            this.add.image(0, 0, 'slide2'),
+            this.add.image(0, 0, 'slide3'),
+            this.add.image(0, 0, 'slide4'),
+            this.add.image(0, 0, 'slide5'),
+            this.add.image(0, 0, 'slide6'),
+            this.add.image(0, 0, 'slide7'),
+            this.add.image(0, 0, 'slide8'),
+            this.add.image(0, 0, 'slide9'),
+            this.add.image(0, 0, 'slide10'),
+            this.add.image(0, 0, 'slide11'),
+            this.add.image(0, 0, 'slide12')
+        );
+        let currentSlideIndex = 0;
+        slides.forEach(slide => {slide.setVisible(false); showcaseContainer.add(slide); slide.setOrigin(0.5, 0.5); slide.setPosition(this.scale.width / 2, this.scale.height / 2); slide.setInteractive({ useHandCursor: true }); slide.scale = 0.6; slide.on('pointerdown', () => {currentSlideIndex = (currentSlideIndex + 1) % slides.length; showSlide(currentSlideIndex);})});
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.setVisible(i === index);
+            });
+        };
+        showSlide(currentSlideIndex);
 
         // Initially, show only the Home container
         this.handleTabClick('Home');
@@ -506,5 +510,13 @@ export class Start extends Phaser.Scene {
         } else {
             this.loadPdf();
         };
+    };
+
+    resetButtons(ignored) {
+        this.tabs.forEach((v, i) => {
+            if (v != ignored && this.tabs[i] === v) {
+                v.setBackgroundColor('#021a33');
+            };
+        })
     };
 };
