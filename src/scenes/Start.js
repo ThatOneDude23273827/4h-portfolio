@@ -22,6 +22,8 @@ export class Start extends Phaser.Scene {
         this.load.image('arrowLeft', './assets/arrow-left.png');
         this.load.image('arrowRight2', './assets/double-arrows-right.png');
         this.load.image('arrowLeft2', './assets/double-arrows-left.png');
+        this.load.image('homePicture', './assets/pic/picture.jpg');
+        this.load.image('homePicture2', './assets/pic/picture2.jpg');
 
         // Slides
         this.load.image('slide1', './assets/presentation/Slide1.PNG');
@@ -205,26 +207,30 @@ export class Start extends Phaser.Scene {
         homeContainer.add([optionsContainer, optionsContainer2, dropdownButton, dropdownButton2]);
         homeContainer.add(this.add.text(dropdownButton.x, dropdownButton.y - 30, 'Form:', {fontFamily: 'Helvetica'}).setOrigin(0.5, 0.5));
         homeContainer.add(this.add.text(dropdownButton2.x, dropdownButton2.y - 30, 'Year:', {fontFamily: 'Helvetica'}).setOrigin(0.5, 0.5));
+        const pic1 = this.add.image(this.scale.width / 2 - 400, this.scale.height / 2 + 100, 'homePicture');
+        const pic2 = this.add.image(this.scale.width / 2 + 400, this.scale.height / 2 + 100, 'homePicture2');
+        pic2.scale = 0.2;
+        pic1.scale = 0.15;
+        homeContainer.add([pic1, pic2]);
         this.tabContainers['Home'] = homeContainer;
 
         // Resume Tab Container
         let resumeContainer = this.add.container(0, 0);
-        const resumeHeader = this.add.text(this.scale.width / 2, this.scale.height / 2 - 200, 'Objective:', {
+        const resumeHeader = this.add.text(Math.floor(this.scale.width / 2), Math.floor(this.scale.height / 2 - 250), 'Objective:', {
             fontSize: '30px',
             color: textColor,
             fontFamily: 'Times New Roman',
         }).setOrigin(0.5);
         resumeContainer.add(resumeHeader);
-        resumeContainer.add(this.add.rectangle(this.scale.width / 2, resumeHeader.y - 20, 200, 2, this.hexStringToNumber('#00FFFF')).setOrigin(0.5, 0.5));
         this.tabContainers['Resume'] = resumeContainer;
-        const resumeObjectiveText = this.add.text(this.scale.width / 2, this.scale.height / 2 - 150, 'The objective of this resume is to highlight skills and lessons learned through 4-H, other avenues in life,\nand more specifcally, through work in my project area. (Computers & Technology)', {
+        const resumeObjectiveText = this.add.text(Math.floor(this.scale.width / 2), Math.floor(this.scale.height / 2 - 200), 'The objective of this resume is to highlight skills and lessons learned through 4-H, other avenues in life,\nand more specifcally, through work in my project area. (Computers & Technology)', {
             fontSize: '26px',
             color: textColor,
             fontFamily: 'Times New Roman',
             align: 'center'
         }).setOrigin(0.5, 0.5);
         resumeContainer.add(resumeObjectiveText);
-        const skillsHeader = this.add.text(this.scale.width / 2, (this.scale.height / 2) - (this.scale.height * 0.1), 'Experiences:', {
+        const skillsHeader = this.add.text(Math.floor(this.scale.width / 2), Math.floor((this.scale.height / 2) - (this.scale.height * 0.1)), 'Experiences:', {
             fontSize: '30px',
             color: textColor,
             fontFamily: 'Times New Roman',
