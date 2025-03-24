@@ -53,24 +53,44 @@ export class Start extends Phaser.Scene {
         let xOffset = 60;
         
         tabNames.forEach((name) => {
-            const fontSize = baseFontSize * (this.scale.width / 800);
-            const button = this.add.text(xOffset, 10, name, {
-                fontSize: `${fontSize}px`,
-                color: '#FFFFFF',
-                fontFamily: 'Helvetica',
-                backgroundColor: '#021a33',
-                padding: { x: 10, y: 5 },
-                align: 'center'
-            })
-                .setOrigin(0, 0)
-                .setPadding(10)
-                .setInteractive({ useHandCursor: true })
-                .on('pointerdown', () => {this.handleTabClick(name); button.setBackgroundColor('#190dac'); this.resetButtons(button)})
-                .on('pointerover', () => button.setColor('#fb8afc'))
-                .on('pointerout', () => button.setColor('#FFFFFF'));
-            xOffset += button.width + 20;
-            this.tabs.push(button);
-        });
+            if (name != 'Home') {
+                const fontSize = baseFontSize * (this.scale.width / 800);
+                const button = this.add.text(xOffset, 10, name, {
+                    fontSize: `${fontSize}px`,
+                    color: '#FFFFFF',
+                    fontFamily: 'Helvetica',
+                    backgroundColor: '#021a33',
+                    padding: { x: 10, y: 5 },
+                    align: 'center'
+                })
+                    .setOrigin(0, 0)
+                    .setPadding(10)
+                    .setInteractive({ useHandCursor: true })
+                    .on('pointerdown', () => {this.handleTabClick(name); button.setBackgroundColor('#190dac'); this.resetButtons(button)})
+                    .on('pointerover', () => button.setColor('#fb8afc'))
+                    .on('pointerout', () => button.setColor('#FFFFFF'));
+                xOffset += button.width + 20;
+                this.tabs.push(button);
+            } else {
+                const fontSize = baseFontSize * (this.scale.width / 800);
+                const button = this.add.text(xOffset, 10, name, {
+                    fontSize: `${fontSize}px`,
+                    color: '#FFFFFF',
+                    fontFamily: 'Helvetica',
+                    backgroundColor: '#190dac',
+                    padding: { x: 10, y: 5 },
+                    align: 'center'
+                })
+                    .setOrigin(0, 0)
+                    .setPadding(10)
+                    .setInteractive({ useHandCursor: true })
+                    .on('pointerdown', () => {this.handleTabClick(name); button.setBackgroundColor('#190dac'); this.resetButtons(button)})
+                    .on('pointerover', () => button.setColor('#fb8afc'))
+                    .on('pointerout', () => button.setColor('#FFFFFF'));
+                xOffset += button.width + 20;
+                this.tabs.push(button);
+            }
+        })
 
         this.graphics = this.add.graphics();
 
