@@ -20,18 +20,18 @@ export class Start extends Phaser.Scene {
         this.load.image('cube+', './assets/cube+.png');
 
         // Slides
-        this.load.image('slide1', './assets/presentation/slide1.PNG');
-        this.load.image('slide2', './assets/presentation/slide2.PNG');
-        this.load.image('slide3', './assets/presentation/slide3.PNG');
-        this.load.image('slide4', './assets/presentation/slide4.PNG');
-        this.load.image('slide5', './assets/presentation/slide5.PNG');
-        this.load.image('slide6', './assets/presentation/slide6.PNG');
-        this.load.image('slide7', './assets/presentation/slide7.PNG');
-        this.load.image('slide8', './assets/presentation/slide8.PNG');
-        this.load.image('slide9', './assets/presentation/slide9.PNG');
-        this.load.image('slide10', './assets/presentation/slide10.PNG');
-        this.load.image('slide11', './assets/presentation/slide11.PNG');
-        this.load.image('slide12', './assets/presentation/slide12.PNG');
+        this.load.image('slide1', './assets/presentation/Slide1.PNG');
+        this.load.image('slide2', './assets/presentation/Slide2.PNG');
+        this.load.image('slide3', './assets/presentation/Slide3.PNG');
+        this.load.image('slide4', './assets/presentation/Slide4.PNG');
+        this.load.image('slide5', './assets/presentation/Slide5.PNG');
+        this.load.image('slide6', './assets/presentation/Slide6.PNG');
+        this.load.image('slide7', './assets/presentation/Slide7.PNG');
+        this.load.image('slide8', './assets/presentation/Slide8.PNG');
+        this.load.image('slide9', './assets/presentation/Slide9.PNG');
+        this.load.image('slide10', './assets/presentation/Slide10.PNG');
+        this.load.image('slide11', './assets/presentation/Slide11.PNG');
+        this.load.image('slide12', './assets/presentation/Slide12.PNG');
     };
 
     create() {
