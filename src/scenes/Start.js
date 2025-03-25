@@ -110,10 +110,12 @@ export class Start extends Phaser.Scene {
             fontFamily: 'Helvetica',
         }).setOrigin(1, 0);
 
-        // 4-H Clover Icon
-        //this.cloverIcon = this.add.image(this.scale.width - 120, this.scale.height / 2 - 320, 'clover')
-        //    .setScale(0.1, 0.1)
-        //    .setOrigin(0.5, 0.5);
+	// Footer
+	const footer = this.add.rectangle(this.scale.width / 2, this.scale.height, this.scale.width * 0.93, 50, this.hexStringToNumber('#011121'));
+	footer.setOrigin(0.5, 0.5);
+	const copyright = this.add.text(this.scale.width / 2, this.scale.height - 40, '© 2025 Caleb Pickering, All Rights Reserved.\nProgramed by Caleb Pickering in the following languages: HTML5, JavaScript, CSS.');
+        copyright.setColor('#FFFFFF');
+	copyright.setOrigin(0.5, 0.5);
     };
 
     update() {
