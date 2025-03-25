@@ -104,7 +104,7 @@ export class Start extends Phaser.Scene {
         this.add.rectangle(this.scale.width / 2, 70, this.scale.width * 0.9, 2, this.hexStringToNumber('#00FFFF')).setOrigin(0.5, 0);
 
         // Name text
-        this.add.text(this.scale.width - 150, 30, "Caleb Pickering's 4H Portfolio", {
+        this.add.text(this.scale.width - 150, 30, "Caleb Pickering's 4-H Portfolio", {
             fontSize: '25px',
             color: '#FFFFFF',
             fontFamily: 'Helvetica',
