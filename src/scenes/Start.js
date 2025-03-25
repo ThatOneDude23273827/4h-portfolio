@@ -19,8 +19,6 @@ export class Start extends Phaser.Scene {
         this.load.image('textBox', './assets/text.png');
         this.load.image('cube+', './assets/cube+.png');
         this.load.image('arrowLeft', './assets/arrow-left.png');
-        this.load.image('arrowRight2', './assets/double-arrows-right.png');
-        this.load.image('arrowLeft2', './assets/double-arrows-left.png');
         this.load.image('homePicture', './assets/pic/picture.jpg');
         this.load.image('homePicture2', './assets/pic/picture2.jpg');
         this.load.image('picture3', './assets/pic/picture3.jpg');
@@ -390,13 +388,14 @@ export class Start extends Phaser.Scene {
             citizenshipImage.setTexture(citizenshipImages[citizenshipAreaIndex]);
         });
         citizenshipContainer.add(arrowLeft);
-        let arrowRight = this.add.image(arrowOffset, 0, 'arrowRight')
+        let arrowRight = this.add.image(arrowOffset, 0, 'arrowLeft')
             .setInteractive({useHandCursor: true})
             .setOrigin(0.5);
         arrowRight.on('pointerdown', () => {
             citizenshipAreaIndex = (citizenshipAreaIndex + 1) % citizenshipImages.length;
             citizenshipImage.setTexture(citizenshipImages[citizenshipAreaIndex]);
         });
+	arrowRight.setFlipX(true);
         citizenshipContainer.add(arrowRight);
 	let projectContainer = this.add.container(
             projectHeader.x,
@@ -416,13 +415,14 @@ export class Start extends Phaser.Scene {
             projectImage.setTexture(projectImages[projectAreaIndex]);
         });
         projectContainer.add(arrowLeft2);
-        let arrowRight2 = this.add.image(arrowOffset, 0, 'arrowRight')
+        let arrowRight2 = this.add.image(arrowOffset, 0, 'arrowLeft')
             .setInteractive({useHandCursor: true})
             .setOrigin(0.5);
         arrowRight2.on('pointerdown', () => {
             projectAreaIndex = (projectAreaIndex + 1) % projectImages.length;
             projectImage.setTexture(projectImages[projectAreaIndex]);
         });
+	arrowRight2.setFlipX(true);
         projectContainer.add(arrowRight2);
 	let leadershipContainer = this.add.container(
             leadershipHeader.x,
@@ -442,13 +442,14 @@ export class Start extends Phaser.Scene {
             leadershipImage.setTexture(leadershipImages[leadershipAreaIndex]);
         });
         leadershipContainer.add(arrowLeft3);
-        let arrowRight3 = this.add.image(arrowOffset, 0, 'arrowRight')
+        let arrowRight3 = this.add.image(arrowOffset, 0, 'arrowLeft')
             .setInteractive({useHandCursor: true})
             .setOrigin(0.5);
         arrowRight3.on('pointerdown', () => {
             leadershipAreaIndex = (leadershipAreaIndex + 1) % leadershipImages.length;
             leadershipImage.setTexture(leadershipImages[leadershipAreaIndex]);
         });
+	arrowRight3.setFlipX(true);
         leadershipContainer.add(arrowRight3);
         photosContainer.add([citizenshipHeader, leadershipHeader, citizenshipHeader, projectHeader, citizenshipContainer, projectContainer, leadershipContainer]);
 	citizenshipImage.setInteractive({useHandCursor: true});
