@@ -1,4 +1,5 @@
-import { Start } from './scenes/Start.js';
+import { Main } from './scenes/Main.js';
+import { Load } from './scenes/Load.js';
 
 export const config = {
     type: Phaser.AUTO,
@@ -9,7 +10,8 @@ export const config = {
     pixelArt: false,
     backgroundColor: '#011121',
     scene: [
-        Start
+        Load,
+        Main
     ],
     scale: {
         mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
