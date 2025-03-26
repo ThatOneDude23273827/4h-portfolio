@@ -201,25 +201,29 @@ export class Main extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5, 0.5);
         resumeContainer.add(resumeObjectiveText);
-        const medalIcon = this.add.image(this.scale.width / 2 + (40 * 1.9), this.scale.height / 2, 'medal'); 
-        const bracketsIcon = this.add.image(this.scale.width / 2 + 315, this.scale.height / 2 - 90, 'brackets');
+        const medalIcon = this.add.image(this.scale.width / 2 + (40 * 1.9) - 18, this.scale.height / 2, 'medal'); 
+        const bracketsIcon = this.add.image(this.scale.width / 2 + 315 + (40 * 2), this.scale.height / 2 - 90, 'brackets');
         const cubeIcon = this.add.image(this.scale.width / 2 - 315, this.scale.height / 2 - 90, 'cube+');
         medalIcon.scale = 1.5;
-        bracketsIcon.scale - 1.5;
+        bracketsIcon.scale - 2.6;
         cubeIcon.scale = 2.2;
-        resumeContainer.add(this.add.text(this.scale.width / 2, this.scale.height / 2, 'Awards', {
+        const awardText = this.add.text(this.scale.width / 2 - 18, this.scale.height / 2, 'Awards', {
             fontFamily: 'Helvetica',
             fontSize: '32px'
-        }).setOrigin(0.5,0.5));
-        resumeContainer.add(this.add.text(this.scale.width / 2 + 315 + (40 * 2) + 5, this.scale.height / 2 - 90, 'Projects', {
+        }).setOrigin(0.5,0.5);
+        const projectText = this.add.text(this.scale.width / 2 + 315 + 5, this.scale.height / 2 - 90, 'Projects', {
             fontFamily: 'Helvetica',
             fontSize: '32px'
-        }).setOrigin(0.5,0.5));
-        resumeContainer.add(this.add.text(this.scale.width / 2 - 4 - 315 - (40 * 1.9), this.scale.height / 2 - 90, 'Hobbies', {
+        }).setOrigin(0.5,0.5);
+        const hobbiesText = this.add.text(this.scale.width / 2 - 4 - 315 - (40 * 1.9), this.scale.height / 2 - 90, 'Hobbies', {
             fontFamily: 'Helvetica',
             fontSize: '32px'
-        }).setOrigin(0.5,0.5));
+        }).setOrigin(0.5,0.5);
+        resumeContainer.add([awardText, projectText, hobbiesText]);
         resumeContainer.add([medalIcon, bracketsIcon, cubeIcon]);
+        resumeContainer.add(this.add.text((medalIcon.x - medalIcon.scaleX / 2) - 6 * 8 - 48, awardText.y + awardText.height, '• Example', {fontFamily: 'Helvetica'}).setOrigin(0.5));
+        resumeContainer.add(this.add.text((bracketsIcon.x - bracketsIcon.scaleX / 2) - 8 * 4 - 16 - 24 + 60, projectText.y + projectText.height + 8 * 7, '• Python HTTP Server Starter\n• LUA Web Console\n• LUA RPG Game\n• Python File Orgainizer\n• JavaScript Space Shooter\n• JavaScript RPG Name Generator\n• Luau Horror Game\n• Luau Platformer Game', {fontFamily: 'Helvetica'}).setOrigin(0.5));
+        resumeContainer.add(this.add.text((cubeIcon.x - cubeIcon.scaleX / 2) - 8 * 7 + 8 + 4, hobbiesText.y + hobbiesText.height + 8 * 2, '• Programming (of course)\n• Martial Arts\n• Learning foreign lanuages', {fontFamily: 'Helvetica'}).setOrigin(0.5)); // Multiply by fontSize / 2 * number of additional lines
         const viewButton2 = this.add.text(this.scale.width / 2 - 58, 290 - 15, 'View', {
             fontSize: '24px',
             color: '#FFFFFF',
