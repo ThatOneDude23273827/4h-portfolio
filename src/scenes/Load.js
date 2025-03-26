@@ -12,6 +12,7 @@ export class Load extends Phaser.Scene{
         progressBox.fillRect(width / 4, height / 2 - 25, width / 2, 50);
         const loadText = this.add.text(this.scale.width / 2, this.scale.height / 2 - 60, 'Loading', {fontFamily: 'Helvetica', fontSize: '22px'});
         let dotCount = 0;
+        loadText.setOrigin(0.5, 0.5);
 
         this.time.addEvent({
             delay: 500,
