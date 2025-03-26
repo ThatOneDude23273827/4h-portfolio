@@ -22,7 +22,6 @@ export class Load extends Phaser.Scene{
         this.load.image('linkIcon', './assets/link.png');
         this.load.image('brackets', './assets/brackets.png');
         this.load.image('medal', './assets/medal.png');
-        this.load.image('textBox', './assets/text.png');
         this.load.image('cube+', './assets/cube+.png');
         this.load.image('arrowLeft', './assets/arrow-left.png');
         this.load.image('homePicture', './assets/pic/picture.jpg');
@@ -36,6 +35,10 @@ export class Load extends Phaser.Scene{
         this.load.image('picture9', './assets/pic/picture9.jpg');
         this.load.image('picture10', './assets/pic/picture10.jpg');
         this.load.image('picture11', './assets/pic/picture11.jpg');
+        this.load.video('video1', './assets/pic/asl_clip.mp4');
+        this.load.video('video2', './assets/pic/speech_clip.mp4');
+        this.load.image('prev1', './assets/pic/prev1.png');
+        this.load.image('prev2', './assets/pic/prev2.png');
 
         // Slides
         this.load.image('slide1', './assets/presentation/Slide1.PNG');

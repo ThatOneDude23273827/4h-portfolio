@@ -181,7 +181,7 @@ export class Main extends Phaser.Scene {
         const pic1 = this.add.image(this.scale.width / 2 - 400, this.scale.height / 2 + 100, 'homePicture');
         const pic2 = this.add.image(this.scale.width / 2 + 400, this.scale.height / 2 + 100, 'homePicture2');
         pic2.scale = 0.4;
-        pic1.scale = 0.3;
+        pic1.scale = 0.4;
         homeContainer.add([pic1, pic2]);
         this.tabContainers['Home'] = homeContainer;
 
@@ -201,13 +201,13 @@ export class Main extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5, 0.5);
         resumeContainer.add(resumeObjectiveText);
-        const medalIcon = this.add.image(this.scale.width / 2 + (40 * 1.9) - 18, this.scale.height / 2, 'medal'); 
+        const medalIcon = this.add.image(this.scale.width / 2 - 18 - 4 - 315 + 2, this.scale.height / 2 + 20, 'medal'); 
         const bracketsIcon = this.add.image(this.scale.width / 2 + 315 + (40 * 2), this.scale.height / 2 - 90, 'brackets');
         const cubeIcon = this.add.image(this.scale.width / 2 - 315, this.scale.height / 2 - 90, 'cube+');
         medalIcon.scale = 1.5;
         bracketsIcon.scale - 2.6;
         cubeIcon.scale = 2.2;
-        const awardText = this.add.text(this.scale.width / 2 - 18, this.scale.height / 2, 'Awards', {
+        const awardText = this.add.text(this.scale.width / 2 - 4 - 315 - (40 * 1.9) - 8 - 2, this.scale.height / 2 + 20, 'Awards', {
             fontFamily: 'Helvetica',
             fontSize: '32px'
         }).setOrigin(0.5,0.5);
@@ -221,9 +221,9 @@ export class Main extends Phaser.Scene {
         }).setOrigin(0.5,0.5);
         resumeContainer.add([awardText, projectText, hobbiesText]);
         resumeContainer.add([medalIcon, bracketsIcon, cubeIcon]);
-        resumeContainer.add(this.add.text((medalIcon.x - medalIcon.scaleX / 2) - 6 * 8 - 48, awardText.y + awardText.height, '• Example', {fontFamily: 'Helvetica'}).setOrigin(0.5));
+        resumeContainer.add(this.add.text((medalIcon.x - medalIcon.scaleX / 2) - 6 * 8 - 48 + 120 + 4 + 2 + 2, awardText.y + awardText.height + 8 * 6, '• 4-H Speech Contest Winner\n  • x3 Local Level\n  • x2 County Level\n  • x1 Multi-County Level\n• Church Bible Drills State Supiorier Winner\n• x2 Overall Summer Camp Champion\n• Bible Feud Champion Team', {fontFamily: 'Helvetica'}).setOrigin(0.5));
         resumeContainer.add(this.add.text((bracketsIcon.x - bracketsIcon.scaleX / 2) - 8 * 4 - 16 - 24 + 60, projectText.y + projectText.height + 8 * 7, '• Python HTTP Server Starter\n• LUA Web Console\n• LUA RPG Game\n• Python File Orgainizer\n• JavaScript Space Shooter\n• JavaScript RPG Name Generator\n• Luau Horror Game\n• Luau Platformer Game', {fontFamily: 'Helvetica'}).setOrigin(0.5));
-        resumeContainer.add(this.add.text((cubeIcon.x - cubeIcon.scaleX / 2) - 8 * 7 + 8 + 4, hobbiesText.y + hobbiesText.height + 8 * 2, '• Programming (of course)\n• Martial Arts\n• Learning foreign lanuages', {fontFamily: 'Helvetica'}).setOrigin(0.5)); // Multiply by fontSize / 2 * number of additional lines
+        resumeContainer.add(this.add.text((cubeIcon.x - cubeIcon.scaleX / 2) - 8 * 7 + 8 + 4, hobbiesText.y + hobbiesText.height + 8 * 2, '• Programming\n• Martial Arts\n• Learning foreign lanuages', {fontFamily: 'Helvetica'}).setOrigin(0.5)); // Multiply by fontSize / 2 * number of additional lines
         const viewButton2 = this.add.text(this.scale.width / 2 - 58, 290 - 15, 'View', {
             fontSize: '24px',
             color: '#FFFFFF',
@@ -255,9 +255,6 @@ export class Main extends Phaser.Scene {
 
         // Photos Tab Container
         let photosContainer = this.add.container(0, 0);
-        const leadershipIndex = [2, 3]; // min, max
-        const citizenIndex = [4, 7];
-        const projectIndex = [];
         let projectHeader = this.add.text(
             this.scale.width / 2,
             (this.scale.height / 2) * 0.5,
@@ -337,38 +334,60 @@ export class Main extends Phaser.Scene {
             leadershipHeader.x,
             leadershipHeader.y + leadershipHeader.height + 10 + 50 + 50 + 30 + 10 - 15
         );
-	    const leadershipImages = [];
+	    const leadershipVideos = ['video1', 'video2'];
+        const leadershipImages = ['prev1', 'prev2'];
         let leadershipAreaIndex = 0;
-        let leadershipImage = this.add.image(0, 0, leadershipImages[leadershipAreaIndex]).setOrigin(0.5);
-        leadershipImage.scale = 0.25;
-        leadershipContainer.add(leadershipImage);
-        arrowOffset = leadershipImage.displayWidth / 2 + 20;
-        let arrowLeft3 = this.add.image(-arrowOffset, 0, 'arrowLeft')
-            .setInteractive({useHandCursor: true})
+        let leadershipMedia;
+        let key;
+        const updateLeadershipMedia = () => {
+            key = leadershipVideos[leadershipAreaIndex];
+            if (leadershipMedia) {leadershipMedia.destroy();};
+            leadershipMedia = this.add.video(0, 0, key)
+                .setOrigin(0.5)
+                .setDisplaySize(150, 100);
+            leadershipMedia.pause();
+            leadershipContainer.add(leadershipMedia);
+        };
+        let currentPreview;
+        const updatePreview = () => {
+            if (currentPreview) {currentPreview.destroy();};
+            currentPreview = this.add.image(0, 0, leadershipImages[leadershipAreaIndex]);
+            currentPreview.scale = 0.25;
+            currentPreview.setOrigin(0.5);
+            currentPreview.setInteractive({useHandCursor: true});
+            currentPreview.on('pointerdown', () => {this.blowupVideo(key);});
+            leadershipContainer.add(currentPreview);
+            return currentPreview;
+        };
+        updateLeadershipMedia.call(this);
+        updatePreview.call(this);
+        arrowOffset = leadershipMedia.displayWidth / 2 + 20;
+        let arrowLeft3 = this.add.image(-20 - arrowOffset, 0, 'arrowLeft')
+            .setInteractive({ useHandCursor: true })
             .setOrigin(0.5);
         arrowLeft3.on('pointerdown', () => {
             leadershipAreaIndex = (leadershipAreaIndex - 1 + leadershipImages.length) % leadershipImages.length;
-            leadershipImage.setTexture(leadershipImages[leadershipAreaIndex]);
+            const newPreview = updatePreview.call(this);
+            updateLeadershipMedia.call(this);
+            leadershipContainer.add(newPreview);
         });
         leadershipContainer.add(arrowLeft3);
-        let arrowRight3 = this.add.image(arrowOffset, 0, 'arrowLeft')
-            .setInteractive({useHandCursor: true})
+        let arrowRight3 = this.add.image(20 + arrowOffset, 0, 'arrowLeft')
+            .setInteractive({ useHandCursor: true })
             .setOrigin(0.5);
+        arrowRight3.setFlipX(true);
         arrowRight3.on('pointerdown', () => {
             leadershipAreaIndex = (leadershipAreaIndex + 1) % leadershipImages.length;
-            leadershipImage.setTexture(leadershipImages[leadershipAreaIndex]);
+            const newPreview = updatePreview.call(this);
+            updateLeadershipMedia.call(this);
+            leadershipContainer.add(newPreview);
         });
-	    arrowRight3.setFlipX(true);
         leadershipContainer.add(arrowRight3);
         photosContainer.add([citizenshipHeader, leadershipHeader, citizenshipHeader, projectHeader, citizenshipContainer, projectContainer, leadershipContainer]);
 	    citizenshipImage.setInteractive({useHandCursor: true});
-	    leadershipImage.setInteractive({useHandCursor: true});
 	    projectImage.setInteractive({useHandCursor: true});
 	    citizenshipImage.on('pointerdown', () => {
 	        this.blowupImage(citizenshipImage);
-	    });
-	    leadershipImage.on('pointerdown', () => {
-	        this.blowupImage(leadershipImage);
 	    });
 	    projectImage.on('pointerdown', () => {
 	        this.blowupImage(projectImage);
@@ -528,7 +547,17 @@ export class Main extends Phaser.Scene {
             pdfUrl = `/4h-portfolio/src/pdfReader/src/assets/section-c-${this.yearSelected}.pdf`;
         } else if (resume && linkTo) {
             pdfUrl = linkTo;
-            window.location.href = linkTo
+            const resumeContainer = this.tabContainers['Resume'];
+
+            if (this.resumeEmbed) {
+                this.resumeEmbed.destroy();
+            };
+
+            this.resumeEmbed = this.add.dom(this.scale.width / 2, this.scale.height / 2)
+            .createFromHTML(
+                `<iframe src="${pdfUrl}" style="width:800px; height:600px; border:none;"></iframe>`
+            );
+            resumeContainer.add(this.resumeEmbed);
             return
         } else {
             return;
@@ -626,5 +655,31 @@ export class Main extends Phaser.Scene {
         });
 
         newImage.scale = 0.75;
+    };
+
+    blowupVideo(videoObj) {
+        const overlay = this.add.rectangle(
+            this.scale.width / 2,
+            this.scale.height / 2,
+            this.scale.width,
+            this.scale.height,
+            this.hexStringToNumber('#000000')
+        ).setOrigin(0.5, 0.5)
+        .setInteractive({ useHandCursor: true });
+        
+        const blownUpVideo = this.add.video(
+            this.scale.width / 2,
+            this.scale.height / 2,
+            videoObj
+        ).setOrigin(0.5, 0.5);
+        blownUpVideo.setScale(0.65);
+        
+        blownUpVideo.play(true);
+        
+        overlay.on('pointerdown', () => {
+            blownUpVideo.pause();
+            blownUpVideo.destroy();
+            overlay.destroy();
+        });
     };
 };
