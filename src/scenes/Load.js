@@ -10,6 +10,18 @@ export class Load extends Phaser.Scene{
         const progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
         progressBox.fillRect(width / 4, height / 2 - 25, width / 2, 50);
+        const loadText = this.add.text(this.scale.width / 2, this.scale.height / 2 - 60, 'Loading', {fontFamily: 'Helvetica', fontSize: '22px'});
+        let dotCount = 0;
+
+        this.time.addEvent({
+            delay: 500,
+            callback: () => {
+                dotCount = (dotCount + 1) % 4;
+                const dots = '.'.repeat(dotCount);
+                loadText.setText('Loading' + dots);
+            },
+            loop: true
+        });
     
         this.load.on('progress', (value) => {
             progressBar.clear();
