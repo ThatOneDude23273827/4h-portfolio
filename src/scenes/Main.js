@@ -573,7 +573,7 @@ export class Main extends Phaser.Scene {
         } else if (action === 2) {
             this.loadPdf();
         } else if (action === 3) {
-            this.loadPdf(true, 'https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/assets/resume.pdf');
+            this.loadPdf(true, '/4h-portfolio/src/pdfReader/src/reader.html?file=https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/assets/resume.pdf');
         } else if (action === 4) {
             const fileUrl = 'https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/assets/resume.pdf';
             fetch(fileUrl)
