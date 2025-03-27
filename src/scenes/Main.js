@@ -7,6 +7,7 @@ export class Main extends Phaser.Scene {
         this.yearSelected = null;
         this.formSelected = null;
         this.tabs = [];
+        this.elementDump = [];
     };
 
     create() {
@@ -276,6 +277,8 @@ export class Main extends Phaser.Scene {
             citizenshipAreaIndex = (citizenshipAreaIndex - 1 + citizenshipImages.length) % citizenshipImages.length;
             citizenshipImage.setTexture(citizenshipImages[citizenshipAreaIndex]);
         });
+        arrowLeft.on('pointerover', () => {arrowLeft.setTint(this.hexStringToNumber('#fb8afc'));})
+        arrowLeft.on('pointerout', () => {arrowLeft.setTint(this.hexStringToNumber('#FFFFFF'));})
         citizenshipContainer.add(arrowLeft);
         let arrowRight = this.add.image(arrowOffset, 0, 'arrowLeft')
             .setInteractive({useHandCursor: true})
@@ -285,12 +288,14 @@ export class Main extends Phaser.Scene {
             citizenshipImage.setTexture(citizenshipImages[citizenshipAreaIndex]);
         });
 	    arrowRight.setFlipX(true);
+        arrowRight.on('pointerover', () => {arrowRight.setTint(this.hexStringToNumber('#fb8afc'));});
+        arrowRight.on('pointerout', () => {arrowRight.setTint(this.hexStringToNumber('#FFFFFF'));});
         citizenshipContainer.add(arrowRight);
 	    let projectContainer = this.add.container(
             projectHeader.x,
             projectHeader.y + projectHeader.height + 10 + 50 + 50 + 30 + 10 - 15
         );
-	    const projectImages = ['picture8', 'picture9', 'picture10', 'picture11', 'picture12'];
+	    const projectImages = ['picture8', 'picture9', 'picture10', 'picture11'];
         let projectAreaIndex = 0;
         let projectImage = this.add.image(0, 0, projectImages[projectAreaIndex]).setOrigin(0.5);
         projectImage.scale = 0.25;
@@ -303,6 +308,8 @@ export class Main extends Phaser.Scene {
             projectAreaIndex = (projectAreaIndex - 1 + projectImages.length) % projectImages.length;
             projectImage.setTexture(projectImages[projectAreaIndex]);
         });
+        arrowLeft2.on('pointerover', () => {arrowLeft2.setTint(this.hexStringToNumber('#fb8afc'));});
+        arrowLeft2.on('pointerout', () => {arrowLeft2.setTint(this.hexStringToNumber('#FFFFFF'));});
         projectContainer.add(arrowLeft2);
         let arrowRight2 = this.add.image(arrowOffset, 0, 'arrowLeft')
             .setInteractive({useHandCursor: true})
@@ -311,6 +318,8 @@ export class Main extends Phaser.Scene {
             projectAreaIndex = (projectAreaIndex + 1) % projectImages.length;
             projectImage.setTexture(projectImages[projectAreaIndex]);
         });
+        arrowRight2.on('pointerover', () => {arrowRight2.setTint(this.hexStringToNumber('#fb8afc'));});
+        arrowRight2.on('pointerout', () => {arrowRight2.setTint(this.hexStringToNumber('#FFFFFF'));});
 	    arrowRight2.setFlipX(true);
         projectContainer.add(arrowRight2);
 	    let leadershipContainer = this.add.container(
@@ -354,11 +363,15 @@ export class Main extends Phaser.Scene {
             updateLeadershipMedia.call(this);
             leadershipContainer.add(newPreview);
         });
+        arrowLeft3.on('pointerover', () => {arrowLeft3.setTint(this.hexStringToNumber('#fb8afc'));});
+        arrowLeft3.on('pointerout', () => {arrowLeft3.setTint(this.hexStringToNumber('#FFFFFF'));});
         leadershipContainer.add(arrowLeft3);
         let arrowRight3 = this.add.image(20 + arrowOffset, 0, 'arrowLeft')
             .setInteractive({ useHandCursor: true })
             .setOrigin(0.5);
         arrowRight3.setFlipX(true);
+        arrowRight3.on('pointerover', () => {arrowRight3.setTint(this.hexStringToNumber('#fb8afc'));});
+        arrowRight3.on('pointerout', () => {arrowRight3.setTint(this.hexStringToNumber('#FFFFFF'));});
         arrowRight3.on('pointerdown', () => {
             leadershipAreaIndex = (leadershipAreaIndex + 1) % leadershipImages.length;
             const newPreview = updatePreview.call(this);
@@ -402,6 +415,10 @@ export class Main extends Phaser.Scene {
         const prevSlideButton = this.add.image(this.scale.width / 2 - 420 - 140, this.scale.height / 2 + 15, 'arrowLeft');
         nextSlideButton.setInteractive({ useHandCursor: true });
         prevSlideButton.setInteractive({ useHandCursor: true });
+        nextSlideButton.on('pointerover', () => {nextSlideButton.setTint(this.hexStringToNumber('#fb8afc'));});
+        prevSlideButton.on('pointerout', () => {prevSlideButton.setTint(this.hexStringToNumber('#FFFFFF'));});
+        prevSlideButton.on('pointerover', () => {prevSlideButton.setTint(this.hexStringToNumber('#fb8afc'));});
+        nextSlideButton.on('pointerout', () => {nextSlideButton.setTint(this.hexStringToNumber('#FFFFFF'));});
         nextSlideButton.on('pointerdown', () => {currentSlideIndex = (currentSlideIndex + 1) % slides.length; showSlide(currentSlideIndex);});
         prevSlideButton.on('pointerdown', () => {currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length; showSlide(currentSlideIndex);});
         showcaseContainer.add([nextSlideButton, prevSlideButton]);
@@ -415,6 +432,8 @@ export class Main extends Phaser.Scene {
         });
         const rpgNameGenButton = loadGameButton
             .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => {rpgNameGenButton.setColor('#fb8afc');})
+            .on('pointerout', () => {rpgNameGenButton.setColor('#44d9f3');})
             .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Fantasy-Name-Generator/', 3));
         showcaseContainer.add(rpgNameGenButton);
         const linkIcon1 = this.add.image(rpgNameGenButton.x - 15, rpgNameGenButton.y + rpgNameGenButton.height / 2, 'linkIcon');
@@ -429,6 +448,8 @@ export class Main extends Phaser.Scene {
         });
         const astralShooterButton = loadGameButton
             .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => {astralShooterButton.setColor('#fb8afc');})
+            .on('pointerout', () => {astralShooterButton.setColor('#44d9f3');})
             .on('pointerdown', () => this.loadMiniGame('https://thatoneguy2664.github.io/Astral-Shooter/', 2));
         showcaseContainer.add(astralShooterButton);
         const linkIcon2 = this.add.image(astralShooterButton.x - 15, astralShooterButton.y + astralShooterButton.height / 2, 'linkIcon');
@@ -474,7 +495,6 @@ export class Main extends Phaser.Scene {
     loadMiniGame(url, num) {
         if (!this.numLoaded[num]) {
             this.numLoaded[num] = true;
-            console.log('Embedding new game...');
 
             const iframe = document.createElement('iframe');
             iframe.src = url;
@@ -512,10 +532,17 @@ export class Main extends Phaser.Scene {
             rect.on('pointerdown', () => {
                 this.embeddedContainers[num].classList.toggle('hide');
                 rect.setVisible(!rect.visible);
+                this.elementDump[0].setVisible(false);
             });
+
+            if (num === 2) {
+                this.elementDump.push(this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'WASD or arrow keys to move, Spacebar or J to shoot.', {fontFamily: 'Helvetica', fontSize: '24px'}));
+                this.elementDump[0].setOrigin(0.5, 0.5);
+            };
         } else {
             this.embeddedContainers[num].classList.toggle('hide');
             this.overlays[num].setVisible(!this.overlays[num].visible);
+            this.elementDump[0].setVisible(true);
         };
     };
 
