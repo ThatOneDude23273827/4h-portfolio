@@ -2,7 +2,6 @@ export class Main extends Phaser.Scene {
     constructor() {
         super('Main');
         this.tabContainers = {};
-        this.numLoaded = {};
         this.overlays = [];
         this.yearSelected = null;
         this.formSelected = null;
@@ -534,30 +533,26 @@ export class Main extends Phaser.Scene {
     };
 
     loadMiniGame(url, num) {
-        if (!this.numLoaded[num]) {
-            this.numLoaded[num] = true;
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.style.width = '1000px';
+        iframe.style.height = '600px';
+        iframe.style.border = '2px solid #FFFFFF';
 
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.style.width = '1000px';
-            iframe.style.height = '600px';
-            iframe.style.border = '2px solid #FFFFFF';
+        if (!this.embeddedContainers) this.embeddedContainers = {};
+        if (!this.embeddedContainers[num]) {
+            const embeddedContainer = document.createElement('div');
+            document.body.style.display = 'flex';
+            embeddedContainer.id = `embeddedGameContainer${num}`;
+            embeddedContainer.style.position = 'absolute';
+            embeddedContainer.style.top = '50%';
+            embeddedContainer.style.left = '50%';
+            embeddedContainer.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(embeddedContainer);
+            this.embeddedContainers[num] = embeddedContainer;
+        }
 
-            if (!this.embeddedContainers) this.embeddedContainers = {};
-            if (!this.embeddedContainers[num]) {
-                const embeddedContainer = document.createElement('div');
-                document.body.style.display = 'flex';
-                embeddedContainer.id = `embeddedGameContainer${num}`;
-                embeddedContainer.style.position = 'absolute';
-                embeddedContainer.style.top = '50%';
-                embeddedContainer.style.left = '50%';
-                embeddedContainer.style.transform = 'translate(-50%, -50%)';
-                document.body.appendChild(embeddedContainer);
-                this.embeddedContainers[num] = embeddedContainer;
-            }
-
-            this.embeddedContainers[num].appendChild(iframe);
-        };
+        this.embeddedContainers[num].appendChild(iframe);
 
         if (!this.overlays[num]) {
             let rect = this.add.image(
@@ -575,6 +570,11 @@ export class Main extends Phaser.Scene {
                 rect.setVisible(!rect.visible);
                 this.elementDump[0].setVisible(false);
                 this.closeMessage.setVisible(false);
+
+                const iframe = this.embeddedContainers[num].querySelector('iframe');
+                if (iframe) {
+                    iframe.remove();
+                };
             });
 
             this.closeMessage = this.add.text(this.scale.width / 2, this.scale.height / 2 + 300, 'Click here to close.', {fontFamily: 'Helvetica', fontSize: '24px'});
