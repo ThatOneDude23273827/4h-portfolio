@@ -645,6 +645,52 @@ export class Main extends Phaser.Scene {
         newImage.scale = 0.75;
     };
 
+    createSpinner() {
+        const bars = [];
+        const radius = 64;
+        const barHeight = radius * 0.5;
+        const barWidth = 10;
+        const centerX = this.scale.width / 2;
+        const centerY = this.scale.height / 2;
+        let angle = -90;
+
+         for (let i = 0; i < 12; i++) {
+            const pos = Phaser.Math.RotateAround(
+            { x: centerX, y: centerY - (radius - barHeight * 0.5) },
+            centerX,
+            centerY,
+            Phaser.Math.DEG_TO_RAD * angle
+            );
+
+            const bar = this.add.rectangle(pos.x, pos.y, barWidth, barHeight, this.hexStringToNumber('#FFFFFF'))
+            .setAngle(angle)
+            .setAlpha(0.2);
+            
+            bars.push(bar);
+            angle += 30;
+        }
+        
+        let index = 0;
+        this.time.addEvent({
+            delay: 70,
+            loop: true,
+            callback: () => {
+                const bar = bars[index];
+                bar.alpha = 1;
+                this.tweens.add({
+                    targets: bar,
+                    alpha: 0.2,
+                    duration: 400,
+                    ease: 'Linear'
+                });
+                
+                index = (index + 1) % bars.length;
+            }
+        });
+
+        return bars;
+    };
+
     blowupVideo(videoObj) {
         const overlay = this.add.rectangle(
             this.scale.width / 2,
@@ -654,13 +700,17 @@ export class Main extends Phaser.Scene {
             this.hexStringToNumber('#000000')
         ).setOrigin(0.5, 0.5)
         .setInteractive({ useHandCursor: true });
+
+        const spinnerParts = this.createSpinner();
         
         const blownUpVideo = this.add.video(
             this.scale.width / 2,
             this.scale.height / 2,
             videoObj
-        ).setOrigin(0.5, 0.5);
-        blownUpVideo.setScale(0.65);
+        )
+        .setOrigin(0.5, 0.5)
+        .setScale(0.65);
+        spinnerParts.forEach((rect) => {blownUpVideo.setAbove(rect)}); // Make the spinner appear behind the video
         
         blownUpVideo.play(true);
         
@@ -668,6 +718,7 @@ export class Main extends Phaser.Scene {
             blownUpVideo.pause();
             blownUpVideo.destroy();
             overlay.destroy();
+            spinnerParts.forEach((rect) => {rect.destroy();});
         });
     };
 };
