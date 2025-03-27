@@ -224,7 +224,17 @@ export class Main extends Phaser.Scene {
         resumeContainer.add(this.add.text((medalIcon.x - medalIcon.scaleX / 2) - 6 * 8 - 48 + 120 + 4 + 2 + 2, awardText.y + awardText.height + 8 * 6, '• 4-H Speech Contest Winner\n  • x3 Local Level\n  • x2 County Level\n  • x1 Multi-County Level\n• Church Bible Drills State Supiorier Winner\n• x2 Overall Summer Camp Champion\n• Bible Feud Champion Team', {fontFamily: 'Helvetica'}).setOrigin(0.5));
         resumeContainer.add(this.add.text((bracketsIcon.x - bracketsIcon.scaleX / 2) - 8 * 4 - 16 - 24 + 60, projectText.y + projectText.height + 8 * 7, '• Python HTTP Server Starter\n• LUA Web Console\n• LUA RPG Game\n• Python File Orgainizer\n• JavaScript Space Shooter\n• JavaScript RPG Name Generator\n• Luau Horror Game\n• Luau Platformer Game', {fontFamily: 'Helvetica'}).setOrigin(0.5));
         resumeContainer.add(this.add.text((cubeIcon.x - cubeIcon.scaleX / 2) - 8 * 7 + 8 + 4, hobbiesText.y + hobbiesText.height + 8 * 2, '• Programming\n• Martial Arts\n• Learning foreign lanuages', {fontFamily: 'Helvetica'}).setOrigin(0.5)); // Multiply by fontSize / 2 * number of additional lines
-        this.handlePdfChoice(3);
+        const viewResumeButton = this.add.text(this.scale.width / 2, this.scale.height / 2,  'View Resume Document', {
+            fontFamily: 'Times New Roman',
+            color: '#00FFFF',
+            fontSize: '32px'
+        });
+        viewResumeButton.setInteractive({useHandCursor: true});
+        viewResumeButton.setOrigin(0.5, 0.5);
+        viewResumeButton.on('pointerdown', () => {this.handlePdfChoice(3);});
+        viewResumeButton.on('pointerover', () => {viewResumeButton.setColor('#fb8afc');});
+        viewResumeButton.on('pointerout', () => {viewResumeButton.setColor('#00FFFF');});
+        resumeContainer.add(viewResumeButton);
 
         // Photos Tab Container
         let photosContainer = this.add.container(0, 0);
@@ -280,7 +290,7 @@ export class Main extends Phaser.Scene {
             projectHeader.x,
             projectHeader.y + projectHeader.height + 10 + 50 + 50 + 30 + 10 - 15
         );
-	    const projectImages = ['picture8', 'picture9', 'picture10', 'picture11'];
+	    const projectImages = ['picture8', 'picture9', 'picture10', 'picture11', 'picture12'];
         let projectAreaIndex = 0;
         let projectImage = this.add.image(0, 0, projectImages[projectAreaIndex]).setOrigin(0.5);
         projectImage.scale = 0.25;
@@ -579,7 +589,7 @@ export class Main extends Phaser.Scene {
         } else if (action === 2) {
             this.loadPdf();
         } else if (action === 3) {
-            this.loadPdf(true, '/4h-portfolio/src/pdfReader/src/reader.html?file=https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/assets/resume.pdf');
+            window.location.href =  '/4h-portfolio/src/pdfReader/src/reader.html?file=https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/assets/resume.pdf';
         };
     };
 
