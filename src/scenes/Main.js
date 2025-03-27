@@ -536,7 +536,7 @@ export class Main extends Phaser.Scene {
             });
 
             if (num === 2) {
-                this.elementDump.push(this.add.text(this.scale.width / 2, this.scale.height / 2 - 250, 'WASD or arrow keys to move, Spacebar or J to shoot.', {fontFamily: 'Helvetica', fontSize: '24px'}));
+                this.elementDump.push(this.add.text(this.scale.width / 2, this.scale.height / 2 - 300, 'WASD or arrow keys to move, Spacebar or J to shoot.', {fontFamily: 'Helvetica', fontSize: '24px'}));
                 this.elementDump[0].setOrigin(0.5, 0.5);
             };
         } else {
