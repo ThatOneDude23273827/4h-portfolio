@@ -81,7 +81,7 @@ export class Main extends Phaser.Scene {
         // Footer
         const footer = this.add.rectangle(this.scale.width / 2, this.scale.height, this.scale.width * 0.93, 90, this.hexStringToNumber('#021b33'));
         footer.setOrigin(0.5, 0.5);
-        const copyright = this.add.text(this.scale.width / 2, this.scale.height - 25, '© 2025 Caleb Pickering, All Rights Reserved.\nProgramed by Caleb Pickering using the following languages: HTML5, JavaScript, CSS.', {align: 'center'});
+        const copyright = this.add.text(this.scale.width / 2, this.scale.height - 25, '© 2025 Caleb Pickering, All Rights Reserved.\nProgramed entirely by Caleb Pickering using the following languages: HTML5, JavaScript, CSS.', {align: 'center'});
             copyright.setColor('#FFFFFF');
         copyright.setOrigin(0.5, 0.5);
     };
