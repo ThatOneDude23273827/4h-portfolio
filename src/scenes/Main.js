@@ -94,9 +94,9 @@ export class Main extends Phaser.Scene {
         // Home Tab Container
         let homeContainer = this.add.container(0, 0);
         this.graphics.fillStyle(this.hexStringToNumber('#147d7d'), 1);
-        const filler = this.graphics.fillRoundedRect(this.scale.width / 2 - 200, 290, 400, 360, 30);
+        const filler = this.graphics.fillRoundedRect(this.scale.width / 2 - 200, 290 - 100, 400, 360, 30);
         homeContainer.add(filler);
-        const viewButton = this.add.text(this.scale.width / 2 - 58, 290 - 15, 'View', {
+        const viewButton = this.add.text(this.scale.width / 2 - 58, 290 - 15 - 100, 'View', {
             fontSize: '24px',
             color: '#FFFFFF',
             padding: { x: 10, y: 5 },
@@ -110,7 +110,7 @@ export class Main extends Phaser.Scene {
         .on('pointerover', () => viewButton.setColor('#fb8afc'))
         .on('pointerout', () => viewButton.setColor('#FFFFFF'));
         homeContainer.add(viewButton);
-        const downloadButton = this.add.text(this.scale.width / 2 + 40, 290 - 15, 'Download', {
+        const downloadButton = this.add.text(this.scale.width / 2 + 40, 290 - 15 - 100, 'Download', {
             fontSize: '24px',
             color: '#FFFFFF',
             padding: { x: 10, y: 5 },
@@ -124,7 +124,7 @@ export class Main extends Phaser.Scene {
         .on('pointerover', () => downloadButton.setColor('#fb8afc'))
         .on('pointerout', () => downloadButton.setColor('#FFFFFF'));
         homeContainer.add(downloadButton);
-        let dropdownButton = this.add.text(Math.floor(this.scale.width / 2), Math.floor(370), 'Select Form', {
+        let dropdownButton = this.add.text(Math.floor(this.scale.width / 2), Math.floor(370) - 100, 'Select Form', {
             backgroundColor: '#000',
             color: '#fff',
             fontSize: '20px',
@@ -150,7 +150,7 @@ export class Main extends Phaser.Scene {
 
             optionsContainer.add(optionText);
         });
-        let dropdownButton2 = this.add.text(Math.floor(this.scale.width / 2), Math.floor(420 + 3 * 35), 'Select Year', {
+        let dropdownButton2 = this.add.text(Math.floor(this.scale.width / 2), Math.floor(420 + 3 * 35) - 100, 'Select Year', {
             backgroundColor: '#000',
             color: '#fff',
             fontSize: '20px',
@@ -179,8 +179,8 @@ export class Main extends Phaser.Scene {
         homeContainer.add([optionsContainer, optionsContainer2, dropdownButton, dropdownButton2]);
         homeContainer.add(this.add.text(dropdownButton.x, dropdownButton.y - 30, 'Form:', {fontFamily: 'Helvetica'}).setOrigin(0.5, 0.5));
         homeContainer.add(this.add.text(dropdownButton2.x, dropdownButton2.y - 30, 'Year:', {fontFamily: 'Helvetica'}).setOrigin(0.5, 0.5));
-        const pic1 = this.add.image(this.scale.width / 2 - 400, this.scale.height / 2 + 100, 'homePicture');
-        const pic2 = this.add.image(this.scale.width / 2 + 400, this.scale.height / 2 + 100, 'homePicture2');
+        const pic1 = this.add.image(this.scale.width / 2 - 400, this.scale.height / 2, 'homePicture');
+        const pic2 = this.add.image(this.scale.width / 2 + 400, this.scale.height / 2, 'homePicture2');
         pic2.scale = 0.4;
         pic1.scale = 0.4;
         homeContainer.add([pic1, pic2]);
@@ -202,30 +202,33 @@ export class Main extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5, 0.5);
         resumeContainer.add(resumeObjectiveText);
-        const medalIcon = this.add.image(this.scale.width / 2 - 18 - 4 - 315 + 2, this.scale.height / 2 + 20, 'medal'); 
-        const bracketsIcon = this.add.image(this.scale.width / 2 + 315 + (40 * 2), this.scale.height / 2 - 90, 'brackets');
-        const cubeIcon = this.add.image(this.scale.width / 2 - 315, this.scale.height / 2 - 90, 'cube+');
+        const medalIcon = this.add.image(this.scale.width / 2 - 8 + 2 + (40 * 1.9), this.scale.height / 2 + 20, 'medal'); 
+        const bracketsIcon = this.add.image(this.scale.width / 2 + 315 + (40 * 2), this.scale.height / 2 + 20, 'brackets');
+        const cubeIcon = this.add.image(this.scale.width / 2 - 315, this.scale.height / 2 + 20, 'cube+');
+        medalIcon.setVisible(false);
+        bracketsIcon.setVisible(false);
+        cubeIcon.setVisible(false);
         medalIcon.scale = 1.5;
         bracketsIcon.scale - 2.6;
         cubeIcon.scale = 2.2;
-        const awardText = this.add.text(this.scale.width / 2 - 4 - 315 - (40 * 1.9) - 8 - 2, this.scale.height / 2 + 20, 'Awards', {
+        const awardText = this.add.text(this.scale.width / 2, this.scale.height / 2 + 20, 'Awards', {
             fontFamily: 'Helvetica',
             fontSize: '32px'
         }).setOrigin(0.5,0.5);
-        const projectText = this.add.text(this.scale.width / 2 + 315 + 5, this.scale.height / 2 - 90, 'Projects', {
+        const projectText = this.add.text(this.scale.width / 2 + 315 + 5 + 32, this.scale.height / 2 + 20, 'Past Projects', {
             fontFamily: 'Helvetica',
             fontSize: '32px'
         }).setOrigin(0.5,0.5);
-        const hobbiesText = this.add.text(this.scale.width / 2 - 4 - 315 - (40 * 1.9), this.scale.height / 2 - 90, 'Hobbies', {
+        const hobbiesText = this.add.text(this.scale.width / 2 - 4 - 315 - (40 * 1.9), this.scale.height / 2 + 20, 'Hobbies', {
             fontFamily: 'Helvetica',
             fontSize: '32px'
         }).setOrigin(0.5,0.5);
         resumeContainer.add([awardText, projectText, hobbiesText]);
         resumeContainer.add([medalIcon, bracketsIcon, cubeIcon]);
-        resumeContainer.add(this.add.text((medalIcon.x - medalIcon.scaleX / 2) - 6 * 8 - 48 + 120 + 4 + 2 + 2, awardText.y + awardText.height + 8 * 6, '• 4-H Speech Contest Winner\n  • x3 Local Level\n  • x2 County Level\n  • x1 Multi-County Level\n• Church Bible Drills State Supiorier Winner\n• x2 Overall Summer Camp Champion\n• Bible Feud Champion Team', {fontFamily: 'Helvetica'}).setOrigin(0.5));
-        resumeContainer.add(this.add.text((bracketsIcon.x - bracketsIcon.scaleX / 2) - 8 * 4 - 16 - 24 + 60, projectText.y + projectText.height + 8 * 7, '• Python HTTP Server Starter\n• LUA Web Console\n• LUA RPG Game\n• Python File Orgainizer\n• JavaScript Space Shooter\n• JavaScript RPG Name Generator\n• Luau Horror Game\n• Luau Platformer Game', {fontFamily: 'Helvetica'}).setOrigin(0.5));
-        resumeContainer.add(this.add.text((cubeIcon.x - cubeIcon.scaleX / 2) - 8 * 7 + 8 + 4, hobbiesText.y + hobbiesText.height + 8 * 2, '• Programming\n• Martial Arts\n• Learning foreign lanuages', {fontFamily: 'Helvetica'}).setOrigin(0.5)); // Multiply by fontSize / 2 * number of additional lines
-        const viewResumeButton = this.add.text(this.scale.width / 2, this.scale.height / 2,  'View Resume Document', {
+        resumeContainer.add(this.add.text(this.scale.width / 2 + 8 + 8, awardText.y + awardText.height + 8 * 8, '• 4-H Speech Contest Winner\n  • x3 Local Level\n  • x2 County Level\n  • x1 Multi-County Level\n• Church Bible Drills State Superior\n  Winner\n• x2 Overall Summer Camp\n  Champion\n• Bible Feud Champion Team', {fontFamily: 'Helvetica'}).setOrigin(0.5));
+        resumeContainer.add(this.add.text(this.scale.width / 2 + 16 + 315 + 5 + 32 - 4, projectText.y + projectText.height + 8 * 7, '• Python HTTP Server Starter\n• LUA Web Console\n• LUA RPG Game\n• Python File Orgainizer\n• JavaScript Space Shooter\n• JavaScript RPG Name Generator\n• Luau Horror Game\n• Luau Platformer Game', {fontFamily: 'Helvetica'}).setOrigin(0.5));
+        resumeContainer.add(this.add.text(this.scale.width / 2 + 16 - 4 - 315 - (40 * 1.9), hobbiesText.y + hobbiesText.height + 8 * 4, '• Programming\n• Martial Arts\n• Learning other lanuages,\n  such as American Sign Language\n  and Latin', {fontFamily: 'Helvetica'}).setOrigin(0.5)); // Multiply by fontSize / 2 * number of additional lines
+        const viewResumeButton = this.add.text(this.scale.width / 2, this.scale.height / 2 - 100,  'View Resume Document', {
             fontFamily: 'Times New Roman',
             color: '#00FFFF',
             fontSize: '32px'
@@ -269,6 +272,10 @@ export class Main extends Phaser.Scene {
         let citizenshipImage = this.add.image(0, 0, citizenshipImages[citizenshipAreaIndex]).setOrigin(0.5);
         citizenshipImage.scale = 0.25;
         citizenshipContainer.add(citizenshipImage);
+        const citizenshipCaption = this.add.text(citizenshipHeader.x, this.scale.height / 2 + 130, 'Working on a Habitat House', {fontFamily: 'Helvetica', fontSize: '18px'});
+        photosContainer.add(citizenshipCaption);
+        citizenshipCaption.setOrigin(0.5, 0.5);
+        const citizenshipCaptionTexts = ['Working on a Habitat House', 'Weedeating the yard of an elderly person', "Cleaning up somebody else's yard", 'Working on a porch in Cayce KY', 'Working on a barn in Cayce KY', 'Working on a doorframe'];
         let arrowOffset = citizenshipImage.displayWidth / 2 + 20;
         let arrowLeft = this.add.image(-arrowOffset, 0, 'arrowLeft')
             .setInteractive({useHandCursor: true})
@@ -276,6 +283,7 @@ export class Main extends Phaser.Scene {
         arrowLeft.on('pointerdown', () => {
             citizenshipAreaIndex = (citizenshipAreaIndex - 1 + citizenshipImages.length) % citizenshipImages.length;
             citizenshipImage.setTexture(citizenshipImages[citizenshipAreaIndex]);
+            citizenshipCaption.setText(citizenshipCaptionTexts[citizenshipAreaIndex]);
         });
         arrowLeft.on('pointerover', () => {arrowLeft.setTint(this.hexStringToNumber('#fb8afc'));})
         arrowLeft.on('pointerout', () => {arrowLeft.setTint(this.hexStringToNumber('#FFFFFF'));})
@@ -286,6 +294,7 @@ export class Main extends Phaser.Scene {
         arrowRight.on('pointerdown', () => {
             citizenshipAreaIndex = (citizenshipAreaIndex + 1) % citizenshipImages.length;
             citizenshipImage.setTexture(citizenshipImages[citizenshipAreaIndex]);
+            citizenshipCaption.setText(citizenshipCaptionTexts[citizenshipAreaIndex]);
         });
 	    arrowRight.setFlipX(true);
         arrowRight.on('pointerover', () => {arrowRight.setTint(this.hexStringToNumber('#fb8afc'));});
@@ -295,11 +304,15 @@ export class Main extends Phaser.Scene {
             projectHeader.x,
             projectHeader.y + projectHeader.height + 10 + 50 + 50 + 30 + 10 - 15
         );
-	    const projectImages = ['picture8', 'picture9', 'picture10', 'picture11'];
+	    const projectImages = ['picture8', 'picture9', 'picture10', 'picture11', 'picture14', 'picture15'];
         let projectAreaIndex = 0;
         let projectImage = this.add.image(0, 0, projectImages[projectAreaIndex]).setOrigin(0.5);
         projectImage.scale = 0.25;
         projectContainer.add(projectImage);
+        const projectCaptionTexts = ['Serving on church media team', 'Running Projector for youth event', 'Running livestream for service', 'Preparing and looking over slides', 'Running sound during worship', 'Preparing sound system for service'];
+        const projectCaption = this.add.text(this.scale.width / 2, this.scale.height / 2 + 130, 'Serving on church media team', {fontFamily: 'Helvetica', fontSize: '18px'});
+        projectCaption.setOrigin(0.5, 0.5);
+        photosContainer.add(projectCaption);
         arrowOffset = projectImage.displayWidth / 2 + 20;
         let arrowLeft2 = this.add.image(-arrowOffset, 0, 'arrowLeft')
             .setInteractive({useHandCursor: true})
@@ -307,6 +320,7 @@ export class Main extends Phaser.Scene {
         arrowLeft2.on('pointerdown', () => {
             projectAreaIndex = (projectAreaIndex - 1 + projectImages.length) % projectImages.length;
             projectImage.setTexture(projectImages[projectAreaIndex]);
+            projectCaption.setText(projectCaptionTexts[projectAreaIndex]);
         });
         arrowLeft2.on('pointerover', () => {arrowLeft2.setTint(this.hexStringToNumber('#fb8afc'));});
         arrowLeft2.on('pointerout', () => {arrowLeft2.setTint(this.hexStringToNumber('#FFFFFF'));});
@@ -317,6 +331,7 @@ export class Main extends Phaser.Scene {
         arrowRight2.on('pointerdown', () => {
             projectAreaIndex = (projectAreaIndex + 1) % projectImages.length;
             projectImage.setTexture(projectImages[projectAreaIndex]);
+            projectCaption.setText(projectCaptionTexts[projectAreaIndex]);
         });
         arrowRight2.on('pointerover', () => {arrowRight2.setTint(this.hexStringToNumber('#fb8afc'));});
         arrowRight2.on('pointerout', () => {arrowRight2.setTint(this.hexStringToNumber('#FFFFFF'));});
@@ -330,6 +345,10 @@ export class Main extends Phaser.Scene {
         const leadershipPreviewImages = ['prev1', 'prev2'];
         let leadershipIndex = 0;
         let leadershipMedia;
+        const leadershipCaptionTexts = ['Signing ASL by myself at camp', 'Gave educational speech about laughter', 'Used body lanuage to communicate a point', 'Preached message at local church'];
+        const leadershipCaption = this.add.text(leadershipHeader.x, this.scale.height / 2 + 130, 'Signing ASL by myself at camp', {fontFamily: 'Helvetica', fontSize: '18px'});
+        leadershipCaption.setOrigin(0.5, 0.5);
+        photosContainer.add(leadershipCaption);
         const updateLeadershipMedia = () => {
             leadershipContainer.removeAll(true);
             const key = leadershipMediaKeys[leadershipIndex];
@@ -366,6 +385,7 @@ export class Main extends Phaser.Scene {
             arrowLeft.on('pointerdown', () => {
                 leadershipIndex = (leadershipIndex - 1 + leadershipMediaKeys.length) % leadershipMediaKeys.length;
                 updateLeadershipMedia.call(this);
+                leadershipCaption.setText(leadershipCaptionTexts[leadershipIndex]);
             });
             arrowLeft.on('pointerover', () => {
                 arrowLeft.setTint(this.hexStringToNumber('#fb8afc'));
@@ -381,6 +401,7 @@ export class Main extends Phaser.Scene {
             arrowRight.on('pointerdown', () => {
                 leadershipIndex = (leadershipIndex + 1) % leadershipMediaKeys.length;
                 updateLeadershipMedia.call(this);
+                leadershipCaption.setText(leadershipCaptionTexts[leadershipIndex]);
             });
             arrowRight.on('pointerover', () => {
                 arrowRight.setTint(this.hexStringToNumber('#fb8afc'));
@@ -553,7 +574,11 @@ export class Main extends Phaser.Scene {
                 this.embeddedContainers[num].classList.toggle('hide');
                 rect.setVisible(!rect.visible);
                 this.elementDump[0].setVisible(false);
+                this.closeMessage.setVisible(false);
             });
+
+            this.closeMessage = this.add.text(this.scale.width / 2, this.scale.height / 2 + 300, 'Click here to close.', {fontFamily: 'Helvetica', fontSize: '24px'});
+            this.closeMessage.setOrigin(0.5, 0.5);
 
             if (num === 2) {
                 this.elementDump.push(this.add.text(this.scale.width / 2, this.scale.height / 2 - 300, 'WASD or arrow keys to move, Spacebar or J to shoot.', {fontFamily: 'Helvetica', fontSize: '24px'}));
@@ -563,6 +588,7 @@ export class Main extends Phaser.Scene {
             this.embeddedContainers[num].classList.toggle('hide');
             this.overlays[num].setVisible(!this.overlays[num].visible);
             this.elementDump[0].setVisible(true);
+            this.closeMessage.setVisible(true);
         };
     };
 

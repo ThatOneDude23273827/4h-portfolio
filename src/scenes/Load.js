@@ -50,6 +50,8 @@ export class Load extends Phaser.Scene{
         this.load.image('picture11', './assets/pic/picture11.jpg');
         this.load.image('picture12', './assets/pic/picture12.jpg');
         this.load.image('picture13', './assets/pic/picture13.jpg');
+        this.load.image('picture14', './assets/pic/picture14.jpg');
+        this.load.image('picture15', './assets/pic/picture15.jpg');
         this.load.video('video1', './assets/pic/asl_clip.mp4');
         this.load.video('video2', './assets/pic/speech_clip.mp4');
         this.load.image('prev1', './assets/pic/prev1.png');
