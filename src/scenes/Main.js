@@ -326,68 +326,88 @@ export class Main extends Phaser.Scene {
             leadershipHeader.x,
             leadershipHeader.y + leadershipHeader.height + 10 + 50 + 50 + 30 + 10 - 15
         );
-	    const leadershipVideos = ['video1', 'video2'];
-        const leadershipImages = ['prev1', 'prev2'];
-        let leadershipAreaIndex = 0;
+	    const leadershipMediaKeys = ['video1', 'video2', 'picture12', 'picture13'];
+        const leadershipPreviewImages = ['prev1', 'prev2'];
+        let leadershipIndex = 0;
         let leadershipMedia;
-        let key;
         const updateLeadershipMedia = () => {
-            key = leadershipVideos[leadershipAreaIndex];
-            if (leadershipMedia) {leadershipMedia.destroy();};
-            leadershipMedia = this.add.video(0, 0, key)
-                .setOrigin(0.5)
-                .setDisplaySize(150, 100);
-            leadershipMedia.pause();
-            leadershipContainer.add(leadershipMedia);
+            leadershipContainer.removeAll(true);
+            const key = leadershipMediaKeys[leadershipIndex];
+            if (key.startsWith('video')) {
+                leadershipMedia = this.add.video(0, 0, key)
+                    .setOrigin(0.5)
+                    .setDisplaySize(150, 100);
+                leadershipMedia.pause();
+                let preview = this.add.image(0, 0, leadershipPreviewImages[leadershipIndex])
+                    .setOrigin(0.5)
+                    .setScale(0.25)
+                    .setInteractive({ useHandCursor: true });
+                preview.on('pointerdown', () => { 
+                    this.blowupVideo(key);
+                });
+                leadershipContainer.add([leadershipMedia, preview]);
+            } else {
+                leadershipMedia = this.add.image(0, 0, key)
+                    .setOrigin(0.5)
+                    .setScale(0.25)
+                    .setInteractive({ useHandCursor: true });
+                leadershipMedia.on('pointerdown', () => { 
+                    this.blowupImage(leadershipMedia);
+                });
+                leadershipContainer.add(leadershipMedia);
+            }
+            updateArrows();
         };
-        let currentPreview;
-        const updatePreview = () => {
-            if (currentPreview) {currentPreview.destroy();};
-            currentPreview = this.add.image(0, 0, leadershipImages[leadershipAreaIndex]);
-            currentPreview.scale = 0.25;
-            currentPreview.setOrigin(0.5);
-            currentPreview.setInteractive({useHandCursor: true});
-            currentPreview.on('pointerdown', () => {this.blowupVideo(key);});
-            leadershipContainer.add(currentPreview);
-            return currentPreview;
+        const updateArrows = () => {
+            let arrowOffset = leadershipMedia.displayWidth / 2 + 20;
+            let arrowLeft = this.add.image(-20 - arrowOffset, 0, 'arrowLeft')
+                .setInteractive({ useHandCursor: true })
+                .setOrigin(0.5);
+            arrowLeft.on('pointerdown', () => {
+                leadershipIndex = (leadershipIndex - 1 + leadershipMediaKeys.length) % leadershipMediaKeys.length;
+                updateLeadershipMedia.call(this);
+            });
+            arrowLeft.on('pointerover', () => {
+                arrowLeft.setTint(this.hexStringToNumber('#fb8afc'));
+            });
+            arrowLeft.on('pointerout', () => {
+                arrowLeft.setTint(this.hexStringToNumber('#FFFFFF'));
+            });
+            leadershipContainer.add(arrowLeft);
+            let arrowRight = this.add.image(20 + arrowOffset, 0, 'arrowLeft')
+                .setInteractive({ useHandCursor: true })
+                .setOrigin(0.5);
+            arrowRight.setFlipX(true);
+            arrowRight.on('pointerdown', () => {
+                leadershipIndex = (leadershipIndex + 1) % leadershipMediaKeys.length;
+                updateLeadershipMedia.call(this);
+            });
+            arrowRight.on('pointerover', () => {
+                arrowRight.setTint(this.hexStringToNumber('#fb8afc'));
+            });
+            arrowRight.on('pointerout', () => {
+                arrowRight.setTint(this.hexStringToNumber('#FFFFFF'));
+            });
+            leadershipContainer.add(arrowRight);
         };
         updateLeadershipMedia.call(this);
-        updatePreview.call(this);
-        arrowOffset = leadershipMedia.displayWidth / 2 + 20;
-        let arrowLeft3 = this.add.image(-20 - arrowOffset, 0, 'arrowLeft')
-            .setInteractive({ useHandCursor: true })
-            .setOrigin(0.5);
-        arrowLeft3.on('pointerdown', () => {
-            leadershipAreaIndex = (leadershipAreaIndex - 1 + leadershipImages.length) % leadershipImages.length;
-            const newPreview = updatePreview.call(this);
-            updateLeadershipMedia.call(this);
-            leadershipContainer.add(newPreview);
+        photosContainer.add([
+            citizenshipHeader,
+            leadershipHeader,
+            citizenshipHeader,
+            projectHeader,
+            citizenshipContainer,
+            projectContainer,
+            leadershipContainer
+        ]);
+        citizenshipImage.setInteractive({ useHandCursor: true });
+        projectImage.setInteractive({ useHandCursor: true });
+        citizenshipImage.on('pointerdown', () => {
+            this.blowupImage(citizenshipImage);
         });
-        arrowLeft3.on('pointerover', () => {arrowLeft3.setTint(this.hexStringToNumber('#fb8afc'));});
-        arrowLeft3.on('pointerout', () => {arrowLeft3.setTint(this.hexStringToNumber('#FFFFFF'));});
-        leadershipContainer.add(arrowLeft3);
-        let arrowRight3 = this.add.image(20 + arrowOffset, 0, 'arrowLeft')
-            .setInteractive({ useHandCursor: true })
-            .setOrigin(0.5);
-        arrowRight3.setFlipX(true);
-        arrowRight3.on('pointerover', () => {arrowRight3.setTint(this.hexStringToNumber('#fb8afc'));});
-        arrowRight3.on('pointerout', () => {arrowRight3.setTint(this.hexStringToNumber('#FFFFFF'));});
-        arrowRight3.on('pointerdown', () => {
-            leadershipAreaIndex = (leadershipAreaIndex + 1) % leadershipImages.length;
-            const newPreview = updatePreview.call(this);
-            updateLeadershipMedia.call(this);
-            leadershipContainer.add(newPreview);
+        projectImage.on('pointerdown', () => {
+            this.blowupImage(projectImage);
         });
-        leadershipContainer.add(arrowRight3);
-        photosContainer.add([citizenshipHeader, leadershipHeader, citizenshipHeader, projectHeader, citizenshipContainer, projectContainer, leadershipContainer]);
-	    citizenshipImage.setInteractive({useHandCursor: true});
-	    projectImage.setInteractive({useHandCursor: true});
-	    citizenshipImage.on('pointerdown', () => {
-	        this.blowupImage(citizenshipImage);
-	    });
-	    projectImage.on('pointerdown', () => {
-	        this.blowupImage(projectImage);
-	    });
         this.tabContainers['Photos'] = photosContainer;
 
         // Showcase Tab Container
