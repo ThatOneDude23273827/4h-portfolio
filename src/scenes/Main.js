@@ -224,34 +224,7 @@ export class Main extends Phaser.Scene {
         resumeContainer.add(this.add.text((medalIcon.x - medalIcon.scaleX / 2) - 6 * 8 - 48 + 120 + 4 + 2 + 2, awardText.y + awardText.height + 8 * 6, '• 4-H Speech Contest Winner\n  • x3 Local Level\n  • x2 County Level\n  • x1 Multi-County Level\n• Church Bible Drills State Supiorier Winner\n• x2 Overall Summer Camp Champion\n• Bible Feud Champion Team', {fontFamily: 'Helvetica'}).setOrigin(0.5));
         resumeContainer.add(this.add.text((bracketsIcon.x - bracketsIcon.scaleX / 2) - 8 * 4 - 16 - 24 + 60, projectText.y + projectText.height + 8 * 7, '• Python HTTP Server Starter\n• LUA Web Console\n• LUA RPG Game\n• Python File Orgainizer\n• JavaScript Space Shooter\n• JavaScript RPG Name Generator\n• Luau Horror Game\n• Luau Platformer Game', {fontFamily: 'Helvetica'}).setOrigin(0.5));
         resumeContainer.add(this.add.text((cubeIcon.x - cubeIcon.scaleX / 2) - 8 * 7 + 8 + 4, hobbiesText.y + hobbiesText.height + 8 * 2, '• Programming\n• Martial Arts\n• Learning foreign lanuages', {fontFamily: 'Helvetica'}).setOrigin(0.5)); // Multiply by fontSize / 2 * number of additional lines
-        const viewButton2 = this.add.text(this.scale.width / 2 - 58, 290 - 15, 'View', {
-            fontSize: '24px',
-            color: '#FFFFFF',
-            padding: { x: 10, y: 5 },
-            align: 'center',
-            backgroundColor: '#190dac',
-            fontFamily: 'Helvetica'
-        })
-        .setOrigin(0.5, 0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => { this.handlePdfChoice(3); })
-        .on('pointerover', () => viewButton.setColor('#fb8afc'))
-        .on('pointerout', () => viewButton.setColor('#FFFFFF'));
-        homeContainer.add(viewButton);
-        const downloadButton2 = this.add.text(this.scale.width / 2 + 40, 290 - 15, 'Download', {
-            fontSize: '24px',
-            color: '#FFFFFF',
-            padding: { x: 10, y: 5 },
-            align: 'center',
-            backgroundColor: '#190dac',
-            fontFamily: 'Helvetica'
-        })
-        .setOrigin(0.5, 0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => { this.handlePdfChoice(4); })
-        .on('pointerover', () => downloadButton.setColor('#fb8afc'))
-        .on('pointerout', () => downloadButton.setColor('#FFFFFF'));
-        resumeContainer.add([downloadButton2, viewButton2]);
+        this.handlePdfChoice(3);
 
         // Photos Tab Container
         let photosContainer = this.add.container(0, 0);
@@ -555,7 +528,7 @@ export class Main extends Phaser.Scene {
 
             this.resumeEmbed = this.add.dom(this.scale.width / 2, this.scale.height / 2)
             .createFromHTML(
-                `<iframe src="${pdfUrl}" style="width:800px; height:600px; border:none;"></iframe>`
+                `<iframe src="${pdfUrl}" style="width:1000px; height:800px; border:none;"></iframe>`
             );
             resumeContainer.add(this.resumeEmbed);
             return
@@ -607,28 +580,6 @@ export class Main extends Phaser.Scene {
             this.loadPdf();
         } else if (action === 3) {
             this.loadPdf(true, '/4h-portfolio/src/pdfReader/src/reader.html?file=https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/assets/resume.pdf');
-        } else if (action === 4) {
-            const fileUrl = 'https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/assets/resume.pdf';
-            fetch(fileUrl)
-            .then(response => {
-                if (!response.ok) {
-                throw new Error('Network response was not ok');
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                const link = document.createElement('a');
-                const url = URL.createObjectURL(blob);
-                link.href = url;
-                link.download = `resume.pdf`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
         };
     };
 
