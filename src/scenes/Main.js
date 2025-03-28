@@ -344,7 +344,7 @@ export class Main extends Phaser.Scene {
         const leadershipPreviewImages = ['prev1', 'prev2'];
         let leadershipIndex = 0;
         let leadershipMedia;
-        const leadershipCaptionTexts = ['Signing ASL by myself at camp', 'Gave educational speech about laughter', 'Used body lanuage to communicate a point', 'Preached message at local church'];
+        const leadershipCaptionTexts = ['Signing ASL by myself at camp', 'Gave educational speech about laughter', 'Used body language to communicate a point', 'Preached message at local church'];
         const leadershipCaption = this.add.text(leadershipHeader.x, this.scale.height / 2 + 130, 'Signing ASL by myself at camp', {fontFamily: 'Helvetica', fontSize: '18px'});
         leadershipCaption.setOrigin(0.5, 0.5);
         photosContainer.add(leadershipCaption);
