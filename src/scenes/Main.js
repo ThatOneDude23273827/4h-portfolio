@@ -615,7 +615,7 @@ export class Main extends Phaser.Scene {
             );
             resumeContainer.add(this.resumeEmbed);
             return
-        } else if (this.yearSelected === 'Entry Form') {
+        } else if (this.formSelected === 'Entry Form') {
             pdfUrl = '/4h-portfolio/src/pdfReader/src/assets/entry-form.pdf'
         } else {
             return;
