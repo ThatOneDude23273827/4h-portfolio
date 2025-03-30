@@ -105,7 +105,7 @@ export class Main extends Phaser.Scene {
         })
         .setOrigin(0.5, 0.5)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => { this.handlePdfChoice(2); })
+        .on('pointerdown', () => { this.handlePdfChoice(2, true); })
         .on('pointerover', () => viewButton.setColor('#fb8afc'))
         .on('pointerout', () => viewButton.setColor('#FFFFFF'));
         homeContainer.add(viewButton);
@@ -119,7 +119,7 @@ export class Main extends Phaser.Scene {
         })
         .setOrigin(0.5, 0.5)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => { this.handlePdfChoice(1); })
+        .on('pointerdown', () => { this.handlePdfChoice(1, true); })
         .on('pointerover', () => downloadButton.setColor('#fb8afc'))
         .on('pointerout', () => downloadButton.setColor('#FFFFFF'));
         homeContainer.add(downloadButton);
@@ -594,7 +594,6 @@ export class Main extends Phaser.Scene {
 
     loadPdf(resume, linkTo) {
         let pdfUrl = null;
-
         if (this.formSelected === 'Section A' && this.yearSelected) {
             pdfUrl = `/4h-portfolio/src/pdfReader/src/assets/section-a-${this.yearSelected}.pdf`;
         } else if (this.formSelected === 'Section B' && this.yearSelected) {
@@ -622,23 +621,25 @@ export class Main extends Phaser.Scene {
         window.location.href = `/4h-portfolio/src/pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
     };
 
-    handlePdfChoice(action) {
+    handlePdfChoice(action, bool) {
         let sectionStr = null;
 
         if (action != 3 && action != 4) {
             if (this.formSelected === 'Section A' && this.yearSelected) {
-                sectionStr = 'a';
+                sectionStr = `section-a-${this.yearSelected}.pdf`;
             } else if (this.formSelected === 'Section B' && this.yearSelected) {
-                sectionStr = 'b';
+                sectionStr = `section-b-${this.yearSelected}.pdf`;
             } else if (this.formSelected === 'Section C' && this.yearSelected) {
-                sectionStr = 'c';
+                sectionStr = `section-c-${this.yearSelected}.pdf`;
+            } else if (bool) {
+                sectionStr = 'entry-form.pdf';
             } else {
                 return 1;
             };
         };
 
         if (action === 1) {
-            const fileUrl = `https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/section-${sectionStr}-${this.yearSelected}.pdf`;
+            const fileUrl = `https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/${sectionStr}`;
             fetch(fileUrl)
             .then(response => {
                 if (!response.ok) {
