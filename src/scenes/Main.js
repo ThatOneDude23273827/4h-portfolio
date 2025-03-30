@@ -123,7 +123,7 @@ export class Main extends Phaser.Scene {
         .on('pointerover', () => downloadButton.setColor('#fb8afc'))
         .on('pointerout', () => downloadButton.setColor('#FFFFFF'));
         homeContainer.add(downloadButton);
-        let dropdownButton = this.add.text(Math.floor(this.scale.width / 2), Math.floor(370) - 100, 'Select Form', {
+        let dropdownButton = this.add.text(Math.floor(this.scale.width / 2), Math.floor(370) - 100 - 30, 'Select Form', {
             backgroundColor: '#000',
             color: '#fff',
             fontSize: '20px',
@@ -134,7 +134,7 @@ export class Main extends Phaser.Scene {
         .setOrigin(0.5, 0.5)
         .on('pointerdown', () => {optionsContainer.setVisible(true);});
         let optionsContainer = this.add.container(dropdownButton.x, dropdownButton.y + 40).setVisible(false);
-        let options = ['Section A', 'Section B', 'Section C'];
+        let options = ['Section A', 'Section B', 'Section C', 'Entry Form'];
         options.forEach((opt, index) => {
             let optionText = this.add.text(0, index * 30, opt, {
                 backgroundColor: '#333',
@@ -149,7 +149,7 @@ export class Main extends Phaser.Scene {
 
             optionsContainer.add(optionText);
         });
-        let dropdownButton2 = this.add.text(Math.floor(this.scale.width / 2), Math.floor(420 + 3 * 35) - 100, 'Select Year', {
+        let dropdownButton2 = this.add.text(Math.floor(this.scale.width / 2), Math.floor(420 + 3 * 45) - 100 - 30, 'Select Year', {
             backgroundColor: '#000',
             color: '#fff',
             fontSize: '20px',
@@ -594,6 +594,7 @@ export class Main extends Phaser.Scene {
 
     loadPdf(resume, linkTo) {
         let pdfUrl = null;
+
         if (this.formSelected === 'Section A' && this.yearSelected) {
             pdfUrl = `/4h-portfolio/src/pdfReader/src/assets/section-a-${this.yearSelected}.pdf`;
         } else if (this.formSelected === 'Section B' && this.yearSelected) {
@@ -614,6 +615,8 @@ export class Main extends Phaser.Scene {
             );
             resumeContainer.add(this.resumeEmbed);
             return
+        } else if (this.yearSelected === 'Entry Form') {
+            pdfUrl = '/4h-portfolio/src/pdfReader/src/assets/entry-form.pdf'
         } else {
             return;
         };
@@ -632,6 +635,7 @@ export class Main extends Phaser.Scene {
             } else if (this.formSelected === 'Section C' && this.yearSelected) {
                 sectionStr = `section-c-${this.yearSelected}.pdf`;
             } else if (bool) {
+                console.log('Entry Form loading...');
                 sectionStr = 'entry-form.pdf';
             } else {
                 return 1;
