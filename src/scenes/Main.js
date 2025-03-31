@@ -519,7 +519,8 @@ export class Main extends Phaser.Scene {
 
     handleTabClick(tabName) {
         if (tabName === 'Entry Form') {
-            window.location.href = '/4h-portfolio/src/pdfReader/src/reader.html?file=https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/entry-form.pdf'
+            window.location.href = '/4h-portfolio/src/pdfReader/src/reader.html?file=https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/entry-form.pdf';
+            this.tabs[1].emit('pointerdown');
             return
         };
 
