@@ -20,7 +20,7 @@ export class Main extends Phaser.Scene {
         
         // Tabs
         const baseFontSize = 15;
-        const tabNames = ['Home', 'Resume', 'Photos', 'Showcase'];
+        const tabNames = ['Home', 'Entry Form', 'Resume', 'Photos', 'Showcase'];
         let xOffset = 60;
         
         tabNames.forEach((name) => {
@@ -134,7 +134,7 @@ export class Main extends Phaser.Scene {
         .setOrigin(0.5, 0.5)
         .on('pointerdown', () => {optionsContainer.setVisible(true);});
         let optionsContainer = this.add.container(dropdownButton.x, dropdownButton.y + 40).setVisible(false);
-        let options = ['Section A', 'Section B', 'Section C', 'Entry Form'];
+        let options = ['Section A', 'Section B', 'Section C'];
         options.forEach((opt, index) => {
             let optionText = this.add.text(0, index * 30, opt, {
                 backgroundColor: '#333',
@@ -184,6 +184,18 @@ export class Main extends Phaser.Scene {
         pic1.scale = 0.4;
         homeContainer.add([pic1, pic2]);
         this.tabContainers['Home'] = homeContainer;
+
+        // Entry Form Tab Container
+        const entryformContainer = this.add.container(0, 0);
+        this.tabContainers['Entry Form'] = entryformContainer;
+        const iframeElement = this.add.dom(this.scale.width / 2, this.scale.height / 2, 'iframe', {
+            width: '800px',
+            height: '600px',
+            border: '12px'
+        });
+        iframeElement.setOrigin(0.5, 0.5);
+        iframeElement.src = '/4h-portfolio/src/pdfReader/src/reader.html?file=https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/entry-form.pdf';
+        entryformContainer.add(iframeElement);
 
         // Resume Tab Container
         let resumeContainer = this.add.container(0, 0);
@@ -624,7 +636,7 @@ export class Main extends Phaser.Scene {
         window.location.href = `/4h-portfolio/src/pdfReader/src/reader.html?file=${encodeURIComponent(pdfUrl)}`;
     };
 
-    handlePdfChoice(action, bool) {
+    handlePdfChoice(action) {
         let sectionStr = null;
 
         if (action != 3 && action != 4) {
@@ -634,9 +646,6 @@ export class Main extends Phaser.Scene {
                 sectionStr = `section-b-${this.yearSelected}.pdf`;
             } else if (this.formSelected === 'Section C' && this.yearSelected) {
                 sectionStr = `section-c-${this.yearSelected}.pdf`;
-            } else if (bool) {
-                console.log('Entry Form loading...');
-                sectionStr = 'entry-form.pdf';
             } else {
                 return 1;
             };
