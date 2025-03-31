@@ -185,18 +185,6 @@ export class Main extends Phaser.Scene {
         homeContainer.add([pic1, pic2]);
         this.tabContainers['Home'] = homeContainer;
 
-        // Entry Form Tab Container
-        const entryformContainer = this.add.container(0, 0);
-        this.tabContainers['Entry Form'] = entryformContainer;
-        const iframeElement = this.add.dom(this.scale.width / 2, this.scale.height / 2, 'iframe', {
-            width: '800px',
-            height: '600px',
-            border: '12px'
-        });
-        iframeElement.setOrigin(0.5, 0.5);
-        iframeElement.src = '/4h-portfolio/src/pdfReader/src/reader.html?file=https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/entry-form.pdf';
-        entryformContainer.add(iframeElement);
-
         // Resume Tab Container
         let resumeContainer = this.add.container(0, 0);
         const resumeHeader = this.add.text(Math.floor(this.scale.width / 2), Math.floor(this.scale.height / 2 - 250), 'Objective:', {
@@ -530,6 +518,11 @@ export class Main extends Phaser.Scene {
     };
 
     handleTabClick(tabName) {
+        if (tabName === 'Entry Form') {
+            window.location.href = '/4h-portfolio/src/pdfReader/src/reader.html?file=https://raw.githubusercontent.com/ThatOneDude23273827/4h-portfolio/refs/heads/main/src/pdfReader/src/assets/entry-form.pdf'
+            return
+        };
+
         console.log(`${tabName} tab clicked`);
         Object.values(this.tabContainers).forEach(container => {
             container.setVisible(false);
